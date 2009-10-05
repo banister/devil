@@ -65,7 +65,7 @@ static VALUE il_DeleteImages(VALUE obj, VALUE images) {
 	rb_raise(rb_eTypeError, "type mismatch:%s", rb_class2name(images));
 
     ary = RARRAY(images);
-    num = ary->len;
+    num = RARRAY_LEN(images);
     u_images = ALLOC_N(ILuint, num);
 
     for(i = 0; i < num; ++i) {
