@@ -1,0 +1,19 @@
+Ruby-DevIL
+
+Ruby bindings for the Developer's Image Library
+You need DevIL installed to build this extension
+
+http://openil.sourceforge.net
+
+It's also worth to have Ruby OpenGL bindings to use the extensions.
+
+http://www2.geganet.net/~yoshi/
+
+See INSTALL for installation instructions.
+
+For now, there is support for just a subset of DevIL functions, but it is enough
+for 95% things you may want to do.
+
+For example uses, see test/ directory
+
+Author: Jaroslaw Tworek <dev.jrx@gmail.com>
