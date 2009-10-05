@@ -36,7 +36,7 @@ static VALUE il_GenImages(VALUE obj, VALUE num_names) {
     int i;
 
     if (!names)
-	rb_raise(rb_eRuntimeError, "IL.GenImages mamory allocation");
+	rb_raise(rb_eRuntimeError, "IL.GenImages memory allocation");
 
     ilGenImages(num, names);
 
@@ -109,8 +109,8 @@ static VALUE il_Save(VALUE obj, VALUE rb_type, VALUE rb_filename) {
 }
 
 static VALUE il_TexImage(VALUE obj, VALUE rb_width, VALUE rb_height,
-	VALUE rb_depth, VALUE rb_bpp, VALUE rb_format, VALUE rb_type,
-	VALUE rb_data) {
+                         VALUE rb_depth, VALUE rb_bpp, VALUE rb_format, VALUE rb_type,
+                         VALUE rb_data) {
     ILuint width = NUM2INT(rb_width);
     ILuint height = NUM2INT(rb_height);
     ILuint depth = NUM2INT(rb_depth);
@@ -120,7 +120,7 @@ static VALUE il_TexImage(VALUE obj, VALUE rb_width, VALUE rb_height,
     ILvoid* data = ImageData2Arr(rb_data);
 
     ILboolean flag = ilTexImage(width, height, depth,
-	    bpp, format, type, data);
+                                bpp, format, type, data);
     return flag ? Qtrue : Qfalse;
 }
 
@@ -130,12 +130,12 @@ static VALUE il_GetData(VALUE obj) {
 }
 
 ILuint ilCopyPixels(ILuint XOff, ILuint YOff, ILuint ZOff, ILuint Width,
-	ILuint Height, ILuint Depth, ILenum Format, ILenum Type, ILvoid
-	*Data);
+                    ILuint Height, ILuint Depth, ILenum Format, ILenum Type, ILvoid
+                    *Data);
 
 static VALUE il_CopyPixels(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOff,
-	VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth, VALUE rb_Format,
-	VALUE rb_Type, VALUE rb_data) {
+                           VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth, VALUE rb_Format,
+                           VALUE rb_Type, VALUE rb_data) {
     ILuint XOff = NUM2INT(rb_XOff);
     ILuint YOff = NUM2INT(rb_YOff);
     ILuint ZOff = NUM2INT(rb_ZOff);
@@ -157,8 +157,8 @@ static VALUE il_SetData(VALUE obj, VALUE rb_Data) {
 }
 
 static VALUE il_SetPixels(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOff,
-	VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth, VALUE rb_Format,
-	VALUE rb_Type, VALUE rb_data) {
+                          VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth, VALUE rb_Format,
+                          VALUE rb_Type, VALUE rb_data) {
     ILuint XOff = NUM2INT(rb_XOff);
     ILuint YOff = NUM2INT(rb_YOff);
     ILuint ZOff = NUM2INT(rb_ZOff);
@@ -181,7 +181,7 @@ static VALUE il_CopyImage(VALUE obj, VALUE rb_Src){
 }
 
 static VALUE il_OverlayImage(VALUE obj, VALUE rb_Source, VALUE rb_XCoord,
-	VALUE rb_YCoord, VALUE rb_ZCoord) {
+                             VALUE rb_YCoord, VALUE rb_ZCoord) {
     ILuint Source = NUM2INT(rb_Source);
     ILint XCoord = NUM2INT(rb_XCoord);
     ILint YCoord = NUM2INT(rb_YCoord);
@@ -193,8 +193,8 @@ static VALUE il_OverlayImage(VALUE obj, VALUE rb_Source, VALUE rb_XCoord,
 
 
 static VALUE il_Blit(VALUE obj, VALUE rb_Source, VALUE rb_DestX, VALUE
-	rb_DestY, VALUE rb_DestZ, VALUE rb_SrcX, VALUE rb_SrcY, VALUE
-	rb_SrcZ, VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth) {
+                     rb_DestY, VALUE rb_DestZ, VALUE rb_SrcX, VALUE rb_SrcY, VALUE
+                     rb_SrcZ, VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth) {
     ILuint Source = NUM2INT(rb_Source);
     ILint DestX = NUM2INT(rb_DestX);
     ILint DestY = NUM2INT(rb_DestY);
@@ -207,7 +207,7 @@ static VALUE il_Blit(VALUE obj, VALUE rb_Source, VALUE rb_DestX, VALUE
     ILuint Depth = NUM2INT(rb_Depth);
 
     ILboolean flag = ilBlit(Source, DestX,DestY, DestZ,SrcX, SrcY, SrcZ,
-	    Width,Height,Depth);
+                            Width,Height,Depth);
     return flag ? Qtrue : Qfalse;
 }
 
