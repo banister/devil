@@ -1,6 +1,7 @@
 To compile the devil extension:
-* ensure you have rake-compiler gem installed
-* go: rake compile
+* ensure you have the rake-compiler gem installed
+* Type:
+* rake compile
 
 To build gem:
 * rake gem

@@ -6,6 +6,10 @@ Devil version 0.1.0
 Ruby bindings for the Developer's Image Library
 You need DevIL installed to build this extension
 
+For debian:
+* install the libdevil and libdevil-dev packages
+
+Or go here to download the libraries:
 http://openil.sourceforge.net
 
 It's also worth having Ruby OpenGL bindings to use the extensions.
