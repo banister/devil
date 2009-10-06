@@ -2,6 +2,7 @@ require 'rake/clean'
 require 'rake/extensiontask'
 require 'rake/gempackagetask'
 require 'rake/testtask'
+require 'rake/rdoctask'
 
 DEVIL_VERSION = "0.1.0"
 
@@ -42,5 +43,10 @@ Rake::TestTask.new do |t|
     t.libs << "lib"
     t.test_files = FileList['test/test*.rb']
     t.verbose = true
+end
+
+Rake::RDocTask.new do |rd|
+  rd.main = "README"
+  rd.rdoc_files.include("README", "ext/devil/*.c")
 end
 

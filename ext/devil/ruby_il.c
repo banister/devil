@@ -228,6 +228,22 @@ static VALUE il_ActiveImage(VALUE obj, VALUE rb_Number){
     return flag ? Qtrue : Qfalse;
 }
 
+/* added by banisterfiend */
+static VALUE il_Enable(VALUE obj, VALUE rb_mode) {
+    ILenum mode = NUM2INT(rb_mode);
+
+    ILboolean flag = ilEnable(mode);
+    return flag ? Qtrue : Qfalse;
+}
+
+static VALUE il_GetInteger(VALUE obj, VALUE rb_mode) {
+    ILenum mode = NUM2INT(rb_mode);
+
+    ILint result = ilGetInteger(mode);
+    return INT2NUM(result);
+}
+/* end of banisterfiend additions */
+
 void
 InitializeIL() {
     mIL = rb_define_module("IL");
@@ -259,6 +275,11 @@ InitializeIL() {
     rb_define_module_function(mIL, "GetError", il_GetError, 0);
     rb_define_module_function(mIL, "ActiveMipmap", il_ActiveMipmap, 1);
     rb_define_module_function(mIL, "ActiveImage", il_ActiveImage, 1);
+
+    // METHODS ADDED BY BANISTERFIEND
+    rb_define_module_function(mIL, "Enable", il_Enable, 1);
+    rb_define_module_function(mIL, "GetInteger", il_GetInteger, 1);
+
     
     //////////////////////////////////
     //CONSTANTS
@@ -343,6 +364,10 @@ InitializeIL() {
     rb_define_const(mIL, "LIB_MNG_ERROR", INT2NUM(IL_LIB_MNG_ERROR));
     rb_define_const(mIL, "UNKNOWN_ERROR", INT2NUM(IL_UNKNOWN_ERROR));
 
+    // CONSTANTS BELOW ADDED BY BANISTERFIEND
+    rb_define_const(mIL, "IMAGE_WIDTH", INT2NUM(IL_IMAGE_WIDTH));
+    rb_define_const(mIL, "IMAGE_HEIGHT", INT2NUM(IL_IMAGE_HEIGHT));
+    rb_define_const(mIL, "FILE_OVERWRITE", INT2NUM(IL_FILE_OVERWRITE));
 }
 //////////////////////////////////////////
 
