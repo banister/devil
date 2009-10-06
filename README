@@ -1,11 +1,14 @@
-Ruby-DevIL
+Devil version 0.1.0
+
+* Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
+* Current maintainer: John Mair (banisterfiend) http://banisterfiend.wordpress.com
 
 Ruby bindings for the Developer's Image Library
 You need DevIL installed to build this extension
 
 http://openil.sourceforge.net
 
-It's also worth to have Ruby OpenGL bindings to use the extensions.
+It's also worth having Ruby OpenGL bindings to use the extensions.
 
 http://www2.geganet.net/~yoshi/
 
@@ -16,4 +19,3 @@ for 95% things you may want to do.
 
 For example uses, see test/ directory
 
-Author: Jaroslaw Tworek <dev.jrx@gmail.com>

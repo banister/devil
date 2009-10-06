@@ -1,17 +1,9 @@
-To compile the ruby-devil extension:
+To compile the devil extension:
+* ensure you have rake-compiler gem installed
+* go: rake compile
 
-  ruby setup.rb config
-  ruby setup.rb setup
-
-
-Optionally to test the result, if you have the OpenGL GLUT library
-ruby bindings installed on your system:
-
-  ruby setup.rb test
-
-To install:
-
-  ruby setup.rb install
+To build gem:
+* rake gem
 
 
 
