@@ -6,4 +6,6 @@ typedef struct RArray RArray;
 
 extern void InitializeIL();
 extern void InitializeILU();
-extern void InitializeILUT();
+
+/* turning off ILUT layer */
+/*extern void InitializeILUT(); */

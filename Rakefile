@@ -4,7 +4,7 @@ require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-DEVIL_VERSION = "0.1.0"
+DEVIL_VERSION = "0.1.1"
 
 dlext = Config::CONFIG['DLEXT']
 
@@ -27,7 +27,7 @@ spec = Gem::Specification.new do |s|
     s.extra_rdoc_files = ["README"]
     s.rdoc_options << '--main' << 'README'
     s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb"] +
-        FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c"].to_a
+        FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb"].to_a
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
