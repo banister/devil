@@ -4,7 +4,7 @@ require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-DEVIL_VERSION = "0.1.1"
+DEVIL_VERSION = "0.1.2"
 
 dlext = Config::CONFIG['DLEXT']
 

@@ -117,7 +117,9 @@ static VALUE il_TexImage(VALUE obj, VALUE rb_width, VALUE rb_height,
     ILubyte bpp = NUM2INT(rb_bpp);
     ILenum format = NUM2INT(rb_format);
     ILenum type = NUM2INT(rb_type);
-    ILvoid* data = ImageData2Arr(rb_data);
+
+    /* from ILvoid */
+    void* data = ImageData2Arr(rb_data);
 
     ILboolean flag = ilTexImage(width, height, depth,
                                 bpp, format, type, data);
@@ -130,7 +132,8 @@ static VALUE il_GetData(VALUE obj) {
 }
 
 ILuint ilCopyPixels(ILuint XOff, ILuint YOff, ILuint ZOff, ILuint Width,
-                    ILuint Height, ILuint Depth, ILenum Format, ILenum Type, ILvoid
+                    /* changed from ILvoid */
+                    ILuint Height, ILuint Depth, ILenum Format, ILenum Type, void
                     *Data);
 
 static VALUE il_CopyPixels(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOff,
@@ -144,14 +147,16 @@ static VALUE il_CopyPixels(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOf
     ILuint Depth = NUM2INT(rb_Depth);
     ILenum Format = NUM2INT(rb_Format);
     ILenum Type = NUM2INT(rb_Type);
-    ILvoid* data = ImageData2Arr(rb_data);
+    /* ILvoid */
+    void* data = ImageData2Arr(rb_data);
 
     ILuint uint = ilCopyPixels(XOff, YOff, ZOff, Width, Height, Depth, Format, Type, data);
     return INT2FIX(uint);    
 }
 
 static VALUE il_SetData(VALUE obj, VALUE rb_Data) {
-    ILvoid* data = ImageData2Arr(rb_Data);
+    /* ILvoid */
+    void* data = ImageData2Arr(rb_Data);
     ILboolean flag = ilSetData(data);
     return flag ? Qtrue : Qfalse;
 }
@@ -167,7 +172,8 @@ static VALUE il_SetPixels(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOff
     ILuint Depth = NUM2INT(rb_Depth);
     ILenum Format = NUM2INT(rb_Format);
     ILenum Type = NUM2INT(rb_Type);
-    ILvoid* data = ImageData2Arr(rb_data);
+    /* ILvoid */
+    void* data = ImageData2Arr(rb_data);
 
     ilSetPixels(XOff, YOff, ZOff, Width, Height, Depth, Format, Type, data);
     return Qnil;
