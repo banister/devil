@@ -12,7 +12,7 @@ end
 img = Devil.load_image("#{direc}/texture.png")
 bink = Devil.load_image("#{direc}/texture.png")
 
-img.blur(4)
+img.gamma_correct(1.6)
 bink.resize(50, 50)
 
 img.save("#{direc}/texture_blur.png")
