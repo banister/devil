@@ -1,7 +1,9 @@
 direc = File.dirname(__FILE__)
 
+$LOAD_PATH.push("#{direc}/../lib/")
+
 require 'rubygems'
-require "#{direc}/../lib/devil"
+require "devil"
 
 
 Devil.load_image("#{direc}/texture.png") do |img|

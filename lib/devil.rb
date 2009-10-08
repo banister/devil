@@ -14,7 +14,7 @@ end
 
 # Provides a high level wrapper for the low-level DevIL Ruby bindings
 module Devil
-    VERSION = '0.1.2'
+    VERSION = '0.1.3'
     
     # loads +file+ and returns a new image
     # Optionally accepts a block and yields the newly created image to the block.

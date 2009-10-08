@@ -4,7 +4,7 @@ require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-DEVIL_VERSION = "0.1.2"
+DEVIL_VERSION = "0.1.3"
 
 dlext = Config::CONFIG['DLEXT']
 
@@ -30,7 +30,7 @@ spec = Gem::Specification.new do |s|
         FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb"].to_a
 
     # just have this here when cross compiling
-    s.files += ["DevIL.dll", "ILU.dll"]
+    s.files += ["test/DevIL.dll", "test/ILU.dll"]
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
