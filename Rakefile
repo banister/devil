@@ -28,6 +28,9 @@ spec = Gem::Specification.new do |s|
     s.rdoc_options << '--main' << 'README'
     s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb"] +
         FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb"].to_a
+
+    # just have this here when cross compiling
+    s.files += ["DevIL.dll", "ILU.dll"]
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
@@ -36,6 +39,7 @@ Rake::GemPackageTask.new(spec) do |pkg|
 end
 
 Rake::ExtensionTask.new('devil', spec)  do |ext|
+    
     ext.config_script = 'extconf.rb' 
     ext.cross_compile = true                
     ext.cross_platform = 'i386-mswin32'

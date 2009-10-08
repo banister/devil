@@ -131,28 +131,28 @@ static VALUE il_GetData(VALUE obj) {
     return MakeImageData(data);
 }
 
-ILuint ilCopyPixels(ILuint XOff, ILuint YOff, ILuint ZOff, ILuint Width,
-                    /* changed from ILvoid */
-                    ILuint Height, ILuint Depth, ILenum Format, ILenum Type, void
-                    *Data);
+/* ILuint ilCopyPixels(ILuint XOff, ILuint YOff, ILuint ZOff, ILuint Width, */
+/*                     /\* changed from ILvoid *\/ */
+/*                     ILuint Height, ILuint Depth, ILenum Format, ILenum Type, void */
+/*                     *Data); */
 
-static VALUE il_CopyPixels(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOff,
-                           VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth, VALUE rb_Format,
-                           VALUE rb_Type, VALUE rb_data) {
-    ILuint XOff = NUM2INT(rb_XOff);
-    ILuint YOff = NUM2INT(rb_YOff);
-    ILuint ZOff = NUM2INT(rb_ZOff);
-    ILuint Width = NUM2INT(rb_Width);
-    ILuint Height = NUM2INT(rb_Height);
-    ILuint Depth = NUM2INT(rb_Depth);
-    ILenum Format = NUM2INT(rb_Format);
-    ILenum Type = NUM2INT(rb_Type);
-    /* ILvoid */
-    void* data = ImageData2Arr(rb_data);
+/* static VALUE il_CopyPixels(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOff, */
+/*                            VALUE rb_Width, VALUE rb_Height, VALUE rb_Depth, VALUE rb_Format, */
+/*                            VALUE rb_Type, VALUE rb_data) { */
+/*     ILuint XOff = NUM2INT(rb_XOff); */
+/*     ILuint YOff = NUM2INT(rb_YOff); */
+/*     ILuint ZOff = NUM2INT(rb_ZOff); */
+/*     ILuint Width = NUM2INT(rb_Width); */
+/*     ILuint Height = NUM2INT(rb_Height); */
+/*     ILuint Depth = NUM2INT(rb_Depth); */
+/*     ILenum Format = NUM2INT(rb_Format); */
+/*     ILenum Type = NUM2INT(rb_Type); */
+/*     /\* ILvoid *\/ */
+/*     void* data = ImageData2Arr(rb_data); */
 
-    ILuint uint = ilCopyPixels(XOff, YOff, ZOff, Width, Height, Depth, Format, Type, data);
-    return INT2FIX(uint);    
-}
+/*     ILuint uint = ilCopyPixels(XOff, YOff, ZOff, Width, Height, Depth, Format, Type, data); */
+/*     return INT2FIX(uint);     */
+/* } */
 
 static VALUE il_SetData(VALUE obj, VALUE rb_Data) {
     /* ILvoid */
@@ -272,7 +272,7 @@ InitializeIL() {
     rb_define_module_function(mIL, "Save", il_Save, 2);
     rb_define_module_function(mIL, "TexImage", il_TexImage, 7);
     rb_define_module_function(mIL, "GetData", il_GetData, 0);
-    rb_define_module_function(mIL, "CopyPixels", il_CopyPixels, 9);
+    /* rb_define_module_function(mIL, "CopyPixels", il_CopyPixels, 9); */
     rb_define_module_function(mIL, "SetData", il_SetData, 1);
     rb_define_module_function(mIL, "SetPixels", il_SetPixels, 9);
     rb_define_module_function(mIL, "CopyImage", il_CopyImage, 1);
