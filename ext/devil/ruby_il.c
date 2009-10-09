@@ -248,6 +248,34 @@ static VALUE il_GetInteger(VALUE obj, VALUE rb_mode) {
     ILint result = ilGetInteger(mode);
     return INT2NUM(result);
 }
+
+static VALUE il_ConvertImage(VALUE obj, VALUE rb_destformat, VALUE rb_desttype)
+{
+    ILenum destformat = NUM2INT(rb_destformat);
+    ILenum desttype = NUM2INT(rb_desttype);
+
+    ILboolean flag = IlConvertImage(destformat, desttype);
+    return flag ? Qtrue : Qfalse;
+}
+
+/* this function is not actualy in the DevIL API, but im adding it here for convenience */
+static VALUE bf_ToBlob(VALUE obj)
+{
+    ILuint width, height;
+    char * img_ptr;
+    VALUE blob;
+    
+    ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+
+    width = ilGetInteger(IL_IMAGE_WIDTH);
+    height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+    img_ptr = (char *)ilGetData();
+
+    blob = rb_str_new(img_ptr, 4 * width * height);
+
+    return blob;
+}
 /* end of banisterfiend additions */
 
 void
@@ -285,8 +313,9 @@ InitializeIL() {
     // METHODS ADDED BY BANISTERFIEND
     rb_define_module_function(mIL, "Enable", il_Enable, 1);
     rb_define_module_function(mIL, "GetInteger", il_GetInteger, 1);
+    rb_define_module_function(mIL, "ConvertImage", il_ConvertImage, 2);
+    rb_define_module_function(mIL, "ToBlob", bf_ToBlob, 0);
 
-    
     //////////////////////////////////
     //CONSTANTS
     //////////////////////////////////
@@ -373,6 +402,7 @@ InitializeIL() {
     // CONSTANTS BELOW ADDED BY BANISTERFIEND
     rb_define_const(mIL, "IMAGE_WIDTH", INT2NUM(IL_IMAGE_WIDTH));
     rb_define_const(mIL, "IMAGE_HEIGHT", INT2NUM(IL_IMAGE_HEIGHT));
+    rb_define_const(mIL, "IMAGE_FORMAT", INT2NUM(IL_IMAGE_FORMAT));
     rb_define_const(mIL, "FILE_OVERWRITE", INT2NUM(IL_FILE_OVERWRITE));
 }
 //////////////////////////////////////////

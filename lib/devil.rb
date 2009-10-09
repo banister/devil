@@ -142,12 +142,23 @@ module Devil
             set_binding
             ILU.Equalize
         end
+
+        # returns the image data in the form of a ruby string
+        # The image data is formatted to RGBA / UNSIGNED BYTE
+        def to_blob
+            set_binding
+            IL.ToBlob
+        end
+
+        alias_method :columns, :width
+        alias_method :rows, :height
         
         private
         
         def set_binding
             IL.BindImage(@name)
         end
+        
     end
 end
 
