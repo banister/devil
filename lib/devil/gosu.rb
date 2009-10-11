@@ -15,7 +15,7 @@ module TexPlay
 
     # convert a Gosu::Image to a Devil::Image
     # This method is only available if require 'devil/gosu' is used
-    def devil_image
+    def to_devil
         devil_img = nil
         capture {
             devil_img = Devil.from_blob(self.to_blob, self.width, self.height)
