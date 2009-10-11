@@ -16,37 +16,48 @@ end
 module Devil
     VERSION = '0.1.5'
     
-    # loads +file+ and returns a new image
-    # Optionally accepts a block and yields the newly created image to the block.
-    def self.load_image(file, &block)
-        name = IL.GenImages(1).first
-        IL.BindImage(name)
-        IL.LoadImage(file)
-
-        img = Image.new(name, file)
-        if block
-            block.call(img)
-        end
-        
-        img
-    end
-
-    # initializes Devil and sets defaults
-    # This method should never need to be called directly.
-    def self.init
-        # initialize DevIL
-        IL.Init
-
-        # default options
-        IL.Enable(IL::FILE_OVERWRITE)
-        ILU.ImageParameter(ILU::FILTER, ILU::BILINEAR) 
-    end
-
     class << self
+
+        # loads +file+ and returns a new image
+        # Optionally accepts a block and yields the newly created image to the block.
+        def load_image(file, &block)
+            name = IL.GenImages(1).first
+            IL.BindImage(name)
+            IL.LoadImage(file)
+
+            img = Image.new(name, file)
+            if block
+                block.call(img)
+            end
+            
+            img
+        end
+
+        # convert an image +blob+ with +width+ and +height
+        # to a bona fide image
+        def from_blob(blob, width, height)
+            j = IL.FromBlob(blob, width, height)
+            
+            Image.new(j, nil)
+        end
+
+        # initializes Devil and sets defaults
+        # This method should never need to be called directly.
+        def init
+            # initialize DevIL
+            IL.Init
+
+            # default options
+            IL.Enable(IL::FILE_OVERWRITE)
+            ILU.ImageParameter(ILU::FILTER, ILU::BILINEAR) 
+        end
+
         alias_method :with_image, :load_image
     end
 
     class Image
+        attr_reader :name
+        
         def initialize(name, file)
             @name = name
             @file = file
@@ -148,6 +159,18 @@ module Devil
         def to_blob
             set_binding
             IL.ToBlob
+        end
+
+        # flip the image about its x axis
+        def flip
+            set_binding
+            ILU.FlipImage
+        end
+
+        # rotate an image about its central point by +angle+ degrees
+        def rotate(angle)
+            set_binding
+            ILU.Rotate(angle)
         end
 
         alias_method :columns, :width

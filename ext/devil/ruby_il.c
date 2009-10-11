@@ -276,6 +276,26 @@ static VALUE bf_ToBlob(VALUE obj)
 
     return blob;
 }
+
+static VALUE bf_FromBlob(VALUE obj, VALUE blob, VALUE rb_width, VALUE rb_height)
+{
+    ILubyte * data;
+    ILuint width, height;
+    ILuint image;
+
+    width = NUM2INT(rb_width);
+    height = NUM2INT(rb_height);
+
+    data = (ILubyte *) RSTRING_PTR(blob);
+    //    rb_p(NUM2INT(RSTRING_LEN(blob));
+
+    ilGenImages(1, &image);
+    ilBindImage(image);
+
+    ilTexImage(width, height, 1, 4, IL_RGBA, IL_UNSIGNED_BYTE, data);
+
+    return INT2NUM(image);
+}
 /* end of banisterfiend additions */
 
 void
@@ -315,6 +335,7 @@ InitializeIL() {
     rb_define_module_function(mIL, "GetInteger", il_GetInteger, 1);
     rb_define_module_function(mIL, "ConvertImage", il_ConvertImage, 2);
     rb_define_module_function(mIL, "ToBlob", bf_ToBlob, 0);
+    rb_define_module_function(mIL, "FromBlob", bf_FromBlob, 3);
 
     //////////////////////////////////
     //CONSTANTS

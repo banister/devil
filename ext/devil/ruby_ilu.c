@@ -89,6 +89,21 @@ static VALUE ilu_BuildMipmaps(VALUE obj) {
     return flag ? Qtrue : Qfalse;
 }
 
+/* functions added by banisterfiend */
+static VALUE ilu_FlipImage(VALUE obj) {
+    ILboolean flag = iluFlipImage();
+    return flag ? Qtrue : Qfalse;
+}
+
+static VALUE ilu_Rotate(VALUE obj, VALUE rb_angle) {
+    ILfloat angle = NUM2DBL(rb_angle);
+
+    ILboolean flag = iluRotate(angle);
+
+    return flag ? Qtrue : Qfalse;
+}
+/* end of functions added by banisterfiend */
+
 void
 InitializeILU() {
     mILU = rb_define_module("ILU");
@@ -107,6 +122,12 @@ InitializeILU() {
     rb_define_module_function(mILU, "Scale", ilu_Scale , 3);
     rb_define_module_function(mILU, "ImageParameter", ilu_ImageParameter , 2);
     rb_define_module_function(mILU, "BuildMipmaps",  ilu_BuildMipmaps, 0);
+
+    /* methods added by banisterfiend */
+    rb_define_module_function(mILU, "FlipImage",  ilu_FlipImage, 0);
+    rb_define_module_function(mILU, "Rotate",  ilu_Rotate, 1);
+
+    /* end of functions added by banisterfiend */
 
     rb_define_const(mILU, "FILTER", INT2NUM(ILU_FILTER));
     rb_define_const(mILU, "NEAREST", INT2NUM(ILU_NEAREST));
