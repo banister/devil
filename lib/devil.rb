@@ -33,7 +33,7 @@ module Devil
             img
         end
 
-        # convert an image +blob+ with +width+ and +height
+        # convert an image +blob+ with +width+ and +height+
         # to a bona fide image
         def from_blob(blob, width, height)
             Image.new(IL.FromBlob(blob, width, height), nil)
@@ -55,7 +55,7 @@ module Devil
     end
 
     class Image
-        attr_reader :name
+        attr_reader :name, :file
 
         def initialize(name, file)
             @name = name
@@ -80,6 +80,7 @@ module Devil
         def save(file = @file)
             set_binding
             IL.SaveImage(file)
+            self
         end
 
         
@@ -87,18 +88,21 @@ module Devil
         def resize(width, height)
             set_binding
             ILU.Scale(width, height, 1)
+            self
         end
 
         # performs a gaussian blur on the image. The blur is performed +iter+ times.
         def blur(iter)
             set_binding
             ILU.BlurGaussian(iter)
+            self
         end
 
         # 'pixelize' the image using a pixel size of +pixel_size+
         def pixelize(pixel_size)
             set_binding
             ILU.Pixelize(pixel_size)
+            self
         end
 
         # add random noise to the image. +factor+ is the tolerance to use.
@@ -106,6 +110,7 @@ module Devil
         def noisify(factor)
             set_binding
             ILU.Noisify(factor)
+            self
         end
 
         # The sharpening +factor+ must be in the range of 0.0 - 2.5. A value of 1.0 for the sharpening
@@ -119,6 +124,7 @@ module Devil
         def sharpen(factor, iter)
             set_binding
             ILU.Sharpen(factor, iter)
+            self
         end
 
         # applies gamma correction to an image using an exponential curve.
@@ -129,12 +135,14 @@ module Devil
         def gamma_correct(factor)
             set_binding
             ILU.GammaCorrect(factor)
+            self
         end
 
         # invert the color of every pixel in the image.
         def negative
             set_binding
             ILU.Negative
+            self
         end
 
         # +factor+ describes desired contrast to use
@@ -144,6 +152,7 @@ module Devil
         def contrast(factor)
             set_binding
             ILU.Contrast(factor)
+            self
         end
 
         # darkens the bright colours and lightens the dark
@@ -151,6 +160,7 @@ module Devil
         def equalize
             set_binding
             ILU.Equalize
+            self
         end
 
         # returns the image data in the form of a ruby string
@@ -164,12 +174,14 @@ module Devil
         def flip
             set_binding
             ILU.FlipImage
+            self
         end
 
         # rotate an image about its central point by +angle+ degrees
         def rotate(angle)
             set_binding
             ILU.Rotate(angle)
+            self
         end
 
         alias_method :columns, :width

@@ -24,9 +24,9 @@ spec = Gem::Specification.new do |s|
     s.platform = Gem::Platform::RUBY
     s.extensions = FileList["ext/**/extconf.rb"]
     s.has_rdoc = true
-    s.extra_rdoc_files = ["README"]
+    s.extra_rdoc_files = ["README", "lib/devil/gosu.rb"]
     s.rdoc_options << '--main' << 'README'
-    s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb"] +
+    s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb"] +
         FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb"].to_a
 
     # just have this here when cross compiling
@@ -53,6 +53,6 @@ end
 
 Rake::RDocTask.new do |rd|
   rd.main = "README"
-  rd.rdoc_files.include("README", "lib/devil.rb")
+  rd.rdoc_files.include("README", "lib/devil.rb", "lib/devil/gosu.rb")
 end
 

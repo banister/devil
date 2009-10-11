@@ -27,29 +27,31 @@ end
 
 class Gosu::Window
 
-    # this function does not yet work :/
-    # save a screenshot of the frame buffer to a +file+
+    # return a screenshot of the framebuffer as a Devil::Image
     # This method is only available if require 'devil/gosu' is used
-    def save_screenshot(file)
+    def screenshot
+        require 'opengl'
+
         canvas_texture_id = glGenTextures(1).first
-
-        glEnable(GL_TEXTURE_2D)
-        glBindTexture(GL_TEXTURE_2D, canvas_texture_id)
         
-        glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, 1)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, self.width, self.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, "\0" * self.width * self.height * 4)
-        
-        glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, self.width, self.height, 0)
+        img = nil
+        self.gl do
+            glEnable(GL_TEXTURE_2D)
+            glBindTexture(GL_TEXTURE_2D, canvas_texture_id)
+            
+            glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, 1)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, self.width, self.height, 0, GL_RGB, GL_UNSIGNED_BYTE, "\0" * self.width * self.height * 3)
+            
+            glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, self.width, self.height, 0)
 
-        data = glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE)
-
-        img = Devil.from_blob(data, self.width, self.height)
+            data = glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE)
+            img = Devil.from_blob(data, self.width, self.height)
+        end
         
-        img.save(file)
+        img
     end
-
 end
 
 class Devil::Image
@@ -68,7 +70,7 @@ class Devil::Image
                     @show_list = []
                 end
 
-                def draw
+                def draw    # :nodoc:
                     @show_list.each { |v| v[:image].draw_rot(v[:x], v[:y], 1, 0) }
                 end
             end
