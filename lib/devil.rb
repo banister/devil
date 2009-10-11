@@ -51,11 +51,12 @@ module Devil
         end
 
         alias_method :with_image, :load_image
+        alias_method :load, :load_image
     end
 
     class Image
         attr_reader :name
-        
+
         def initialize(name, file)
             @name = name
             @file = file
@@ -173,13 +174,13 @@ module Devil
 
         alias_method :columns, :width
         alias_method :rows, :height
-        
+
         private
         
         def set_binding
             IL.BindImage(@name)
         end
-        
+
     end
 end
 

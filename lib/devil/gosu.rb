@@ -4,6 +4,7 @@ require 'devil'
 module TexPlay
 
     # save a Gosu::Image to +file+
+    # This method is only available if require 'devil/gosu' is used
     def save(file)
         capture { 
             save_image = Devil.from_blob(self.to_blob, self.width, self.height)
@@ -13,6 +14,7 @@ module TexPlay
     end
 
     # convert a Gosu::Image to a Devil::Image
+    # This method is only available if require 'devil/gosu' is used
     def devil_image
         devil_img = nil
         capture {
@@ -26,6 +28,8 @@ end
 class Gosu::Window
 
     # this function does not yet work :/
+    # save a screenshot of the frame buffer to a +file+
+    # This method is only available if require 'devil/gosu' is used
     def save_screenshot(file)
         canvas_texture_id = glGenTextures(1).first
 
@@ -46,4 +50,38 @@ class Gosu::Window
         img.save(file)
     end
 
+end
+
+class Devil::Image
+
+    # display the Devil images on screen utilizing the Gosu library for visualization
+    # if +x+ and +y+ are specified then show the image centered at this location, otherwise
+    # draw the image at the center of the screen 
+    # This method is only available if require 'devil/gosu' is used
+    def show(x = 512, y = 384)
+        if !Devil.const_defined?(:Window)
+            c = Class.new(Gosu::Window) do
+                attr_accessor :show_list
+                
+                def initialize
+                    super(1024, 768, false)
+                    @show_list = []
+                end
+
+                def draw
+                    @show_list.each { |v| v[:image].draw_rot(v[:x], v[:y], 1, 0) }
+                end
+            end
+
+            Devil.const_set :Window, c
+        end
+        
+        if !defined? @@window
+            @@window ||= Devil::Window.new
+
+            at_exit { @@window.show }
+        end
+        
+        @@window.show_list.push :image => Gosu::Image.new(@@window, self), :x => x, :y => y
+    end
 end
