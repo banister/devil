@@ -18,7 +18,6 @@ module TexPlay
         capture {
             devil_img = Devil.from_blob(self.to_blob, self.width, self.height)
             devil_img.flip
-            devil_img
         }
         devil_img
     end

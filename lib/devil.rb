@@ -36,9 +36,7 @@ module Devil
         # convert an image +blob+ with +width+ and +height
         # to a bona fide image
         def from_blob(blob, width, height)
-            j = IL.FromBlob(blob, width, height)
-            
-            Image.new(j, nil)
+            Image.new(IL.FromBlob(blob, width, height), nil)
         end
 
         # initializes Devil and sets defaults
