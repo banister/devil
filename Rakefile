@@ -38,8 +38,9 @@ Rake::GemPackageTask.new(spec) do |pkg|
     pkg.need_tar = false
 end
 
+task :compile => :clean
+
 Rake::ExtensionTask.new('devil', spec)  do |ext|
-    
     ext.config_script = 'extconf.rb' 
     ext.cross_compile = true                
     ext.cross_platform = 'i386-mswin32'

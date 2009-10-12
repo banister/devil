@@ -254,7 +254,7 @@ static VALUE il_ConvertImage(VALUE obj, VALUE rb_destformat, VALUE rb_desttype)
     ILenum destformat = NUM2INT(rb_destformat);
     ILenum desttype = NUM2INT(rb_desttype);
 
-    ILboolean flag = IlConvertImage(destformat, desttype);
+    ILboolean flag = ilConvertImage(destformat, desttype);
     return flag ? Qtrue : Qfalse;
 }
 

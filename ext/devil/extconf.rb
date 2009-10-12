@@ -5,7 +5,8 @@ if RUBY_PLATFORM =~ /mingw/
     $LDFLAGS += ' -L/home/john/.rake-compiler/ruby/ruby-1.8.6-p287/lib/'
 end
 
-if RUBY_PLATFORM =~ /win/
+puts "platform is #{RUBY_PLATFORM}"
+if RUBY_PLATFORM =~ /win/ || RUBY_PLATFORM =~ /mingw/
     exit unless have_library("DevIL");
 else
     exit unless have_library("IL");
