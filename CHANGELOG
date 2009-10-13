@@ -1,3 +1,20 @@
+2009-13-06 John Mair (Banisterfiend)
+* version 0.1.6
+* added Gosu and TexPlay interoperability
+* ...bunch of other miscellaneous functionality
+* released gem
+
+2009-12-06 John Mair (Banisterfiend)
+* constants added to ruby_il.c:
+* IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_FORMAT, FILE_OVERWRITE
+* functions added to ruby_il.c:
+* ilEnable, ilGetInteger, ilConvertImage, ToBlob, ilCloneCurImage
+* conditional compilation added to ruby_il.c for LBM constant
+* functions added to ruby_ilu.c:
+* ilFlipImage, ilRotate, ilCrop
+* added Gosu and TexPlay interoperability
+* ...bunch of other miscellaneous functionality
+
 2009-10-06 John Mair (Banisterfiend)
 * ruby 1.9 compatibility
 
