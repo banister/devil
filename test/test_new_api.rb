@@ -5,7 +5,6 @@ $LOAD_PATH.push("#{direc}/../lib/")
 require 'rubygems'
 require "devil"
 
-
 Devil.load_image("#{direc}/texture.png") do |img|
     img.negative
     img.save("#{direc}/texture_neg.png")

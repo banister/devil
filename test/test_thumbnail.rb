@@ -1,20 +1,12 @@
+$direc = File.dirname(__FILE__)
+
+$LOAD_PATH.push("#{$direc}/../lib/")
+
 require 'rubygems'
-require 'devil'
+require 'devil/gosu'
 
-IL.Init
-
-name = IL.GenImages(1)[0]
-IL.BindImage(name)
-IL.LoadImage("texture.png")
-
-puts "image height/width"
-puts IL.GetInteger(IL::IMAGE_WIDTH)
-puts IL.GetInteger(IL::IMAGE_HEIGHT)
-
-ILU.Scale(100, 100, 1)
-
-IL.Enable(IL::FILE_OVERWRITE)
-
-IL.SaveImage("desert_thumb.png")
-
+Devil.load("texture.png") do |img|
+    img.thumbnail(300)
+    img.show
+end
 

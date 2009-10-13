@@ -4,7 +4,7 @@ require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-DEVIL_VERSION = "0.1.5"
+DEVIL_VERSION = "0.1.6"
 
 dlext = Config::CONFIG['DLEXT']
 
@@ -21,16 +21,27 @@ spec = Gem::Specification.new do |s|
     s.date = Time.now.strftime '%Y-%m-%d'
     s.require_path = 'lib'
     s.homepage = "http://banisterfiend.wordpress.com"
-    s.platform = Gem::Platform::RUBY
-    s.extensions = FileList["ext/**/extconf.rb"]
+
+    if RUBY_PLATFORM =~ /win/
+        s.platform = Gem::Platform::CURRENT
+    else
+        s.platform = Gem::Platform::RUBY
+    end
+
+    if RUBY_PLATFORM !~ /win/
+        s.extensions = FileList["ext/**/extconf.rb"]
+    end
+    
     s.has_rdoc = true
     s.extra_rdoc_files = ["README", "lib/devil/gosu.rb"]
     s.rdoc_options << '--main' << 'README'
     s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb"] +
         FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb"].to_a
 
-    # just have this here when cross compiling
-    s.files += ["test/DevIL.dll", "test/ILU.dll"]
+    if RUBY_PLATFORM =~ /win/
+        s.files += ["lib/1.8/devil.so", "lib/1.9/devil.so"]
+    end
+
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|

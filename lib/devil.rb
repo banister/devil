@@ -14,7 +14,7 @@ end
 
 # Provides a high level wrapper for the low-level DevIL Ruby bindings
 module Devil
-    VERSION = '0.1.5'
+    VERSION = '0.1.6'
     
     class << self
 
@@ -82,12 +82,39 @@ module Devil
             IL.SaveImage(file)
             self
         end
-
         
         # resize the image to +width+ and +height+. Aspect ratios of the image do not have to be the same.
         def resize(width, height)
             set_binding
             ILU.Scale(width, height, 1)
+            self
+        end
+
+        # Creates a proportional thumbnail of the image scaled so its longest
+        # edge is resized to +size+ 
+        def thumbnail(size)
+            # this thumbnail code from image_science.rb
+            
+            w, h = width, height
+            scale = size.to_f / (w > h ? w : h)
+            resize((w * scale).to_i, (h * scale).to_i)
+            self
+        end
+
+        # return a deep copy of the current image
+        def dup
+            set_binding
+            Image.new(IL.CloneCurImage, nil)
+        end
+
+        # crop the current image
+        # +xoff+ number of pixels to skip in x direction
+        # +yoff+ number of pixels to skip in y direction
+        # +width+ number of pixels to preserve in x direction
+        # +height+ number of pixels to preserve in y direction
+        def crop(xoff, yoff, width, height)
+            set_binding
+            ILU.Crop(xoff, yoff, width, height)
             self
         end
 

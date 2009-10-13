@@ -56,6 +56,12 @@ end
 
 class Devil::Image
 
+    # convert a Devil::Image to a Gosu::Image.
+    # Must provide a +window+ parameter, as per Gosu::Image#new()
+    def to_gosu(window)
+        Gosu::Image.new(window, self)
+    end
+    
     # display the Devil images on screen utilizing the Gosu library for visualization
     # if +x+ and +y+ are specified then show the image centered at this location, otherwise
     # draw the image at the center of the screen 
@@ -86,4 +92,5 @@ class Devil::Image
         
         @@window.show_list.push :image => Gosu::Image.new(@@window, self), :x => x, :y => y
     end
+
 end

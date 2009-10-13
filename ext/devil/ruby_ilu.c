@@ -102,6 +102,18 @@ static VALUE ilu_Rotate(VALUE obj, VALUE rb_angle) {
 
     return flag ? Qtrue : Qfalse;
 }
+
+static VALUE ilu_Crop(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_width, VALUE rb_height)
+{
+    ILuint XOff = NUM2INT(rb_XOff);
+    ILuint YOff = NUM2INT(rb_YOff);
+    ILuint width = NUM2INT(rb_width);
+    ILuint height = NUM2INT(rb_height);
+                       	
+    ILboolean flag = iluCrop(XOff, YOff, 1, width, height, 1);
+
+    return flag ? Qtrue : Qfalse;
+}
 /* end of functions added by banisterfiend */
 
 void
@@ -126,7 +138,7 @@ InitializeILU() {
     /* methods added by banisterfiend */
     rb_define_module_function(mILU, "FlipImage",  ilu_FlipImage, 0);
     rb_define_module_function(mILU, "Rotate",  ilu_Rotate, 1);
-
+    rb_define_module_function(mILU, "Crop",  ilu_Crop, 4);
     /* end of functions added by banisterfiend */
 
     rb_define_const(mILU, "FILTER", INT2NUM(ILU_FILTER));

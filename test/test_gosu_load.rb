@@ -6,7 +6,6 @@ require 'rubygems'
 require 'gosu'
 require 'devil'
 
-
 class W < Gosu::Window
     def initialize
         super(1024, 768, false, 20)
@@ -21,7 +20,6 @@ class W < Gosu::Window
     end
     
 end
-
 
 w = W.new
 w.show

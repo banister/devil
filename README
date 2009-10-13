@@ -1,4 +1,4 @@
-Devil version 0.1.5
+Devil version 0.1.6
 
 * Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
 * Current maintainer: John Mair (banisterfiend) http://banisterfiend.wordpress.com
@@ -9,14 +9,18 @@ You need DevIL installed to build this extension
 For debian:
 * install the libdevil and libdevil-dev packages
 
-Or go here to download the libraries:
-http://openil.sourceforge.net
+For windows:
+* download devil.dll and ilu.dll from here http://openil.sourceforge.net
+* and copy devil.dll and ilu.dll to c:\windows\system\
 
-It's also worth having Ruby OpenGL bindings to use the extensions.
+For other systems:
+* install libdevil and lib-devil-dev using your package manager
+* OR download and install the libraries from http://openil.sourceforge.net
 
-http://www2.geganet.net/~yoshi/
-
-See INSTALL for installation instructions.
+If you wish to use the Gosu and TexPlay extensions, it is necessary to also have:
+* the Gosu gem (gem install gosu)
+* the TexPlay gem (gem install texplay)
+* ruby-opengl (gem install ruby-opengl)
 
 For now, there is support for just a subset of DevIL functions, but it is enough
 for 95% things you may want to do.

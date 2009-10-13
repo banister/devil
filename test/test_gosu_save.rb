@@ -21,7 +21,6 @@ class W < Gosu::Window
     
 end
 
-
 w = W.new
 w.show
         

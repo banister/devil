@@ -234,7 +234,7 @@ static VALUE il_ActiveImage(VALUE obj, VALUE rb_Number){
     return flag ? Qtrue : Qfalse;
 }
 
-/* added by banisterfiend */
+/* methods below added by banisterfiend */
 static VALUE il_Enable(VALUE obj, VALUE rb_mode) {
     ILenum mode = NUM2INT(rb_mode);
 
@@ -287,7 +287,6 @@ static VALUE bf_FromBlob(VALUE obj, VALUE blob, VALUE rb_width, VALUE rb_height)
     height = NUM2INT(rb_height);
 
     data = (ILubyte *) RSTRING_PTR(blob);
-    //    rb_p(NUM2INT(RSTRING_LEN(blob));
 
     ilGenImages(1, &image);
     ilBindImage(image);
@@ -295,6 +294,13 @@ static VALUE bf_FromBlob(VALUE obj, VALUE blob, VALUE rb_width, VALUE rb_height)
     ilTexImage(width, height, 1, 4, IL_RGBA, IL_UNSIGNED_BYTE, data);
 
     return INT2NUM(image);
+}
+
+static VALUE il_CloneCurImage(VALUE obj)
+{
+    ILuint clone = ilCloneCurImage();
+
+    return INT2NUM(clone);
 }
 /* end of banisterfiend additions */
 
@@ -330,13 +336,15 @@ InitializeIL() {
     rb_define_module_function(mIL, "ActiveMipmap", il_ActiveMipmap, 1);
     rb_define_module_function(mIL, "ActiveImage", il_ActiveImage, 1);
 
-    // METHODS ADDED BY BANISTERFIEND
+    /* methods added by baniterfiend */
     rb_define_module_function(mIL, "Enable", il_Enable, 1);
     rb_define_module_function(mIL, "GetInteger", il_GetInteger, 1);
     rb_define_module_function(mIL, "ConvertImage", il_ConvertImage, 2);
     rb_define_module_function(mIL, "ToBlob", bf_ToBlob, 0);
     rb_define_module_function(mIL, "FromBlob", bf_FromBlob, 3);
-
+    rb_define_module_function(mIL, "CloneCurImage", il_CloneCurImage, 0);
+    /* end of methods added by banisterfiend */
+    
     //////////////////////////////////
     //CONSTANTS
     //////////////////////////////////
@@ -348,7 +356,13 @@ InitializeIL() {
     rb_define_const(mIL, "ICO", INT2NUM(IL_ICO));
     rb_define_const(mIL, "JPG", INT2NUM(IL_JPG));
     rb_define_const(mIL, "JFIF", INT2NUM(IL_JFIF));
+    
+#ifdef _WIN32    
+    rb_define_const(mIL, "LBM", INT2NUM(IL_ILBM));
+#else
     rb_define_const(mIL, "LBM", INT2NUM(IL_LBM));
+#endif    
+
     rb_define_const(mIL, "PCD", INT2NUM(IL_PCD));
     rb_define_const(mIL, "PCX", INT2NUM(IL_PCX));
     rb_define_const(mIL, "PIC", INT2NUM(IL_PIC));
