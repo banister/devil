@@ -56,7 +56,6 @@ class Gosu::Window
     end
 end
 
-# monkey patches to Devil::Image class
 class Devil::Image
 
     # convert a Devil::Image to a Gosu::Image.
@@ -95,5 +94,4 @@ class Devil::Image
         
         @@window.show_list.push :image => Gosu::Image.new(@@window, self), :x => x, :y => y
     end
-
 end
