@@ -1,6 +1,7 @@
 require 'texplay'
 require 'devil'
 
+# monkey patches for TexPlay module (and by proxy the Gosu::Image class)
 module TexPlay
 
     # save a Gosu::Image to +file+
@@ -25,6 +26,7 @@ module TexPlay
     end
 end
 
+# monkey patches for Gosu::Window class
 class Gosu::Window
 
     # return a screenshot of the framebuffer as a Devil::Image
@@ -54,6 +56,7 @@ class Gosu::Window
     end
 end
 
+# monkey patches to Devil::Image class
 class Devil::Image
 
     # convert a Devil::Image to a Gosu::Image.
