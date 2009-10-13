@@ -5,7 +5,7 @@ Devil version 0.1.6
 * Current maintainer: John Mair (banisterfiend) http://banisterfiend.wordpress.com
 
 Ruby bindings for the Developer's Image Library
-You need DevIL installed to build this extension
+You need DevIL installed to use this extension
 
 Devil Project page is here: http://github.com/banister/devil
 
