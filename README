@@ -17,7 +17,7 @@ For debian:
 * install the libdevil and libdevil-dev packages
 
 For windows:
-* download devil.dll and ilu.dll from here http://openil.sourceforge.net
+* download devil.dll and ilu.dll from http://github.com/banister/devil/downloads
 * and copy devil.dll and ilu.dll to c:\windows\system\
 
 For other systems:
