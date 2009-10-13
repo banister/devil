@@ -1,10 +1,14 @@
 Devil version 0.1.6
+===================
 
 * Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
 * Current maintainer: John Mair (banisterfiend) http://banisterfiend.wordpress.com
 
 Ruby bindings for the Developer's Image Library
 You need DevIL installed to build this extension
+
+Installation Instructions:
+==========================
 
 For debian:
 * install the libdevil and libdevil-dev packages
