@@ -16,7 +16,7 @@ bink = Devil.load_image("#{direc}/texture.png")
 img.gamma_correct(1.6)
 bink.resize(50, 50)
 
-img.save("#{direc}/texture_blur.png")
+img.save("#{direc}/texture_gamma.png")
 bink.save("#{direc}/texture_tiny.png")
 
 
