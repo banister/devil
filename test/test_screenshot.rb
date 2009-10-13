@@ -12,7 +12,6 @@ class W < Gosu::Window
         @img = Gosu::Image.new(self, "tank.png")
         @img2 = @img.dup
         @img.circle 100, 100, 50, :color => :purple, :filled => true
-        @img2.splice_and_scale @img2, 100, 100, :factor => 0.2
     end
     
     def draw

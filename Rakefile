@@ -36,7 +36,7 @@ spec = Gem::Specification.new do |s|
     s.extra_rdoc_files = ["README", "lib/devil/gosu.rb"]
     s.rdoc_options << '--main' << 'README'
     s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb"] +
-        FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb"].to_a
+        FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb", "test/*.png", "test/*.jpg"].to_a
 
     if RUBY_PLATFORM =~ /win/
         s.files += ["lib/1.8/devil.so", "lib/1.9/devil.so"]

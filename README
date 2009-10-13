@@ -30,4 +30,4 @@ For now, there is support for just a subset of DevIL functions, but it is enough
 for 95% things you may want to do.
 
 For example uses, see test/ directory
-
+(note: that many of the examples use the Gosu library...this is often just for visualization purposes. Alot of the functionality does not depend on Gosu being present)
