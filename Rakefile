@@ -33,7 +33,7 @@ spec = Gem::Specification.new do |s|
     end
     
     s.has_rdoc = true
-    s.extra_rdoc_files = ["README", "lib/devil/gosu.rb"]
+    s.extra_rdoc_files = ["README"]
     s.rdoc_options << '--main' << 'README'
     s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb"] +
         FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb", "test/*.png", "test/*.jpg"].to_a
