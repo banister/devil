@@ -1,4 +1,5 @@
 2009-15-06 John Mair (Banisterfiend)
+* hopefully fixed compile errors on SnowLeopard!
 * added error checking to Devil::load_image()
 * added monkeypatch to Gosu::Image::new() to transparently load multiple formats
 * updated some rdoc
