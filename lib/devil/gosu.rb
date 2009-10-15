@@ -12,7 +12,7 @@ module TexPlay
         }
     end
 
-    # convert a Gosu::Image to a Devil::Image
+    # convert a Gosu::Image to a Devil::Image.
     # This method is only available if require 'devil/gosu' is used
     def to_devil
         devil_img = nil
@@ -27,7 +27,7 @@ end
 # monkey patches for Gosu::Window class
 class Gosu::Window
 
-    # return a screenshot of the framebuffer as a Devil::Image
+    # return a screenshot of the framebuffer as a Devil::Image.
     # This method is only available if require 'devil/gosu' is used
     def screenshot
         require 'opengl'
@@ -58,7 +58,8 @@ class Gosu::Image
     class << self
         alias_method :original_new_redux, :new
         
-        # monkey patching to support multiple image formats
+        # monkey patching to support multiple image formats.
+        # This method is only available if require 'devil/gosu' is used
         def new(window, file, &block)
             if file.respond_to?(:to_blob) || file =~ /\.(bmp|png)$/
                 original_new_redux(window, file, &block)
@@ -73,6 +74,7 @@ class Devil::Image
 
     # convert a Devil::Image to a Gosu::Image.
     # Must provide a +window+ parameter, as per Gosu::Image#new()
+    # This method is only available if require 'devil/gosu' is used
     def to_gosu(window)
         Gosu::Image.new(window, self)
     end
