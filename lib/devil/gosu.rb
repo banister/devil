@@ -60,11 +60,11 @@ class Gosu::Image
         
         # monkey patching to support multiple image formats.
         # This method is only available if require 'devil/gosu' is used
-        def new(window, file, &block)
+        def new(window, file, *args, &block)
             if file.respond_to?(:to_blob) || file =~ /\.(bmp|png)$/
-                original_new_redux(window, file, &block)
+                original_new_redux(window, file, *args, &block)
             else 
-                original_new_redux(window, Devil.load(file), &block)
+                original_new_redux(window, Devil.load(file), *args, &block)
             end
         end
     end
