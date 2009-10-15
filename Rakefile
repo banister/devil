@@ -33,9 +33,9 @@ spec = Gem::Specification.new do |s|
     end
     
     s.has_rdoc = true
-    s.extra_rdoc_files = ["README.markdown"]
-    s.rdoc_options << '--main' << 'README.markdown'
-    s.files = ["Rakefile", "README.markdown", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb"] +
+    s.extra_rdoc_files = ["README"]
+    s.rdoc_options << '--main' << 'README'
+    s.files = ["Rakefile", "README", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb"] +
         FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb", "test/*.png", "test/*.jpg"].to_a
 
     if RUBY_PLATFORM =~ /win32/
@@ -64,7 +64,7 @@ Rake::TestTask.new do |t|
 end
 
 Rake::RDocTask.new do |rd|
-  rd.main = "README.markdown"
-  rd.rdoc_files.include("README.markdown", "lib/devil.rb", "lib/devil/gosu.rb")
+  rd.main = "README"
+  rd.rdoc_files.include("README", "lib/devil.rb", "lib/devil/gosu.rb")
 end
 
