@@ -25,6 +25,11 @@ module Devil
             IL.BindImage(name)
             IL.LoadImage(file)
 
+            if (error_code = IL.GetError) != IL::NO_ERROR
+                raise RuntimeError, "an error occured while trying to "+
+                    "load the image #{file}. Error code: #{error_code}"
+            end
+
             img = Image.new(name, file)
             if block
                 block.call(img)
@@ -32,6 +37,9 @@ module Devil
             
             img
         end
+
+        alias_method :with_image, :load_image
+        alias_method :load, :load_image
 
         # convert an image +blob+ with +width+ and +height+
         # to a bona fide image
@@ -50,8 +58,6 @@ module Devil
             ILU.ImageParameter(ILU::FILTER, ILU::BILINEAR) 
         end
 
-        alias_method :with_image, :load_image
-        alias_method :load, :load_image
     end
 
     class Image
@@ -70,11 +76,15 @@ module Devil
             IL.GetInteger(IL::IMAGE_WIDTH)
         end
 
+        alias_method :columns, :width
+
         # returns the height of the image
         def height
             set_binding
             IL.GetInteger(IL::IMAGE_HEIGHT)
         end
+
+        alias_method :rows, :height
 
         # saves the image to +file+. If no +file+ is provided default to the opened file.
         def save(file = @file)
@@ -106,6 +116,8 @@ module Devil
             set_binding
             Image.new(IL.CloneCurImage, nil)
         end
+
+        alias_method :clone, :dup
 
         # crop the current image
         # +xoff+ number of pixels to skip in x direction
@@ -210,9 +222,6 @@ module Devil
             ILU.Rotate(angle)
             self
         end
-
-        alias_method :columns, :width
-        alias_method :rows, :height
 
         private
         

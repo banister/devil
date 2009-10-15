@@ -8,9 +8,7 @@ module TexPlay
     # This method is only available if require 'devil/gosu' is used
     def save(file)
         capture { 
-            save_image = Devil.from_blob(self.to_blob, self.width, self.height)
-            save_image.flip
-            save_image.save(file)
+            to_devil.save(file)
         }
     end
 
@@ -53,6 +51,21 @@ class Gosu::Window
         end
         
         img
+    end
+end
+
+class Gosu::Image
+    class << self
+        alias_method :original_new_redux, :new
+        
+        # monkey patching to support multiple image formats
+        def new(window, file, &block)
+            if file.respond_to?(:to_blob) || file =~ /\.(bmp|png)$/
+                original_new_redux(window, file, &block)
+            else 
+                original_new_redux(window, Devil.load(file), &block)
+            end
+        end
     end
 end
 

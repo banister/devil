@@ -16,6 +16,9 @@ Installation Instructions:
 For debian:
 * install the libdevil and libdevil-dev packages
 
+For Gentoo:
+* emerge "media-libs/devil"
+
 For windows:
 * download devil.dll and ilu.dll from http://github.com/banister/devil/downloads
 * and copy devil.dll and ilu.dll to c:\windows\system\

@@ -5,7 +5,7 @@ $LOAD_PATH.push("#{direc}/../lib/")
 require 'rubygems'
 require "devil/gosu"
 
-img = Devil.load_image("#{direc}/texture.png") 
+img = Devil.load_image("#{direc}/texture.jpg") 
 
 img.crop(100,100, 200, 200)
 img_dup = img.dup
