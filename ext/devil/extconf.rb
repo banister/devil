@@ -6,7 +6,7 @@ if RUBY_PLATFORM =~ /mingw/
 end
 
 puts "platform is #{RUBY_PLATFORM}"
-if RUBY_PLATFORM =~ /win/ || RUBY_PLATFORM =~ /mingw/
+if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw/
     exit unless have_library("DevIL");
 else
     exit unless have_library("IL");

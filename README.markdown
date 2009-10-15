@@ -1,7 +1,7 @@
 ![Alt text](http://dl.getdropbox.com/u/239375/DevIL.png)
 
 Ruby Devil version 0.1.6
-===================
+========================
 
 * Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
 * Current maintainer: John Mair (banisterfiend) [http://banisterfiend.wordpress.com](http://banisterfiend.wordpress.com)
