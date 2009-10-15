@@ -1,4 +1,4 @@
-![Alt text](http://openil.sourceforge.net/images/DevIL.jpg)
+![Alt text](http://dl.getdropbox.com/u/239375/DevIL.png)
 
 Ruby Devil version 0.1.6
 ===================
