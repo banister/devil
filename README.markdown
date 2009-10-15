@@ -21,7 +21,7 @@ For Gentoo:
 
 For windows:
 * download devil.dll and ilu.dll from http://github.com/banister/devil/downloads
-* and copy devil.dll and ilu.dll to c:\windows\system\
+* and copy these files to c:\windows\system\
 
 For other systems:
 * install libdevil and lib-devil-dev using your package manager

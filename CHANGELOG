@@ -1,3 +1,8 @@
+2009-15-06 John Mair (Banisterfiend)
+* added error checking to Devil::load_image()
+* added monkeypatch to Gosu::Image::new() to transparently load multiple formats
+* updated some rdoc
+
 2009-13-06 John Mair (Banisterfiend)
 * version 0.1.6
 * added Gosu and TexPlay interoperability
