@@ -4,12 +4,12 @@ Ruby Devil version 0.1.6
 ===================
 
 * Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
-* Current maintainer: John Mair (banisterfiend) http://banisterfiend.wordpress.com
+* Current maintainer: John Mair (banisterfiend) [http://banisterfiend.wordpress.com](http://banisterfiend.wordpress.com)
 
 Ruby bindings for the Developer's Image Library
 You need DevIL installed to use this extension
 
-The Ruby Devil Project page is here: http://github.com/banister/devil
+The Ruby Devil Project page is here: [http://github.com/banister/devil](http://github.com/banister/devil)
 
 
 Installation Instructions:
@@ -25,13 +25,13 @@ For Gentoo:
 
 For windows:
 
-* download devil.dll and ilu.dll from http://github.com/banister/devil/downloads
+* download devil.dll and ilu.dll from [http://github.com/banister/devil/downloads](http://github.com/banister/devil/downloads)
 * and copy these files to c:\windows\system\
 
 For other systems:
 
 * install libdevil and lib-devil-dev using your package manager
-* OR download and install the libraries from http://openil.sourceforge.net
+* OR download and install the libraries from [http://openil.sourceforge.net](http://openil.sourceforge.net)
 
 After you've installed the DevIL libraries you install the gem by going:
 
