@@ -1,4 +1,6 @@
-Devil version 0.1.6
+![Alt text](http://openil.sourceforge.net/images/DevIL.jpg)
+
+Ruby Devil version 0.1.6
 ===================
 
 * Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
@@ -14,23 +16,29 @@ Installation Instructions:
 ==========================
 
 For debian:
+
 * install the libdevil and libdevil-dev packages
 
 For Gentoo:
+
 * emerge "media-libs/devil"
 
 For windows:
+
 * download devil.dll and ilu.dll from http://github.com/banister/devil/downloads
 * and copy these files to c:\windows\system\
 
 For other systems:
+
 * install libdevil and lib-devil-dev using your package manager
 * OR download and install the libraries from http://openil.sourceforge.net
 
 After you've installed the DevIL libraries you install the gem by going:
+
 * gem install devil
 
 If you wish to use the Gosu and TexPlay extensions, it is necessary to also have:
+
 * the Gosu gem (gem install gosu)
 * the TexPlay gem (gem install texplay)
 * ruby-opengl (gem install ruby-opengl)
