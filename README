@@ -26,6 +26,10 @@ For windows:
 * download devil.dll and ilu.dll from [http://github.com/banister/devil/downloads]
 * and copy these files to c:\windows\system\
 
+For macosx:
+
+* sudo port install libdevil
+
 For other systems:
 
 * install libdevil and lib-devil-dev using your package manager
