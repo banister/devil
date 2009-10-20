@@ -103,17 +103,66 @@ static VALUE ilu_Rotate(VALUE obj, VALUE rb_angle) {
     return flag ? Qtrue : Qfalse;
 }
 
-static VALUE ilu_Crop(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_width, VALUE rb_height)
+static VALUE ilu_Crop(VALUE obj, VALUE rb_XOff, VALUE rb_YOff, VALUE rb_ZOff, VALUE rb_width, VALUE rb_height, VALUE rb_depth)
 {
     ILuint XOff = NUM2INT(rb_XOff);
     ILuint YOff = NUM2INT(rb_YOff);
+    ILuint ZOff = NUM2INT(rb_ZOff);
     ILuint width = NUM2INT(rb_width);
     ILuint height = NUM2INT(rb_height);
+    ILuint depth = NUM2INT(rb_depth);
                        	
-    ILboolean flag = iluCrop(XOff, YOff, 1, width, height, 1);
+    ILboolean flag = iluCrop(XOff, YOff, ZOff, width, height, depth);
 
     return flag ? Qtrue : Qfalse;
 }
+
+static VALUE ilu_EnlargeCanvas(VALUE obj, VALUE rb_width, VALUE rb_height, VALUE rb_depth)
+{
+    ILuint width = NUM2INT(rb_width);
+    ILuint height = NUM2INT(rb_height);
+    ILuint depth = NUM2INT(rb_depth);
+
+    ILboolean flag = iluEnlargeCanvas(width, height, depth);
+
+    return flag ? Qtrue : Qfalse;
+}
+
+static VALUE ilu_EdgeDetectP(VALUE obj)
+{
+    ILboolean flag = iluEdgeDetectP();
+
+    return flag ? Qtrue : Qfalse;    
+}
+
+static VALUE ilu_EdgeDetectS(VALUE obj)
+{
+    ILboolean flag = iluEdgeDetectS();
+
+    return flag ? Qtrue : Qfalse;    
+}
+
+static VALUE ilu_Emboss(VALUE obj)
+{
+    ILboolean flag = iluEmboss();
+
+    return flag ? Qtrue : Qfalse;    
+}
+
+static VALUE ilu_Mirror(VALUE obj)
+{
+    ILboolean flag = iluMirror();
+
+    return flag ? Qtrue : Qfalse;    
+}
+
+static VALUE ilu_SwapColours(VALUE obj)
+{
+    ILboolean flag = iluSwapColours();
+
+    return flag ? Qtrue : Qfalse;    
+}
+
 /* end of functions added by banisterfiend */
 
 void
@@ -138,9 +187,16 @@ InitializeILU() {
     /* methods added by banisterfiend */
     rb_define_module_function(mILU, "FlipImage",  ilu_FlipImage, 0);
     rb_define_module_function(mILU, "Rotate",  ilu_Rotate, 1);
-    rb_define_module_function(mILU, "Crop",  ilu_Crop, 4);
+    rb_define_module_function(mILU, "Crop",  ilu_Crop, 6);
+    rb_define_module_function(mILU, "EnlargeCanvas",  ilu_EnlargeCanvas, 3);
+    rb_define_module_function(mILU, "EdgeDetectP", ilu_EdgeDetectP, 0);
+    rb_define_module_function(mILU, "EdgeDetectS", ilu_EdgeDetectS, 0);
+    rb_define_module_function(mILU, "Emboss", ilu_Emboss, 0);
+    rb_define_module_function(mILU, "Mirror", ilu_Mirror, 0);
+    rb_define_module_function(mILU, "SwapColours", ilu_SwapColours, 0);
     /* end of functions added by banisterfiend */
 
+    /* constants added by banisterfiend */
     rb_define_const(mILU, "FILTER", INT2NUM(ILU_FILTER));
     rb_define_const(mILU, "NEAREST", INT2NUM(ILU_NEAREST));
     rb_define_const(mILU, "LINEAR", INT2NUM(ILU_LINEAR));
@@ -151,4 +207,13 @@ InitializeILU() {
     rb_define_const(mILU, "SCALE_BSPLINE", INT2NUM(ILU_SCALE_BSPLINE));
     rb_define_const(mILU, "SCALE_LANCZOS3", INT2NUM(ILU_SCALE_LANCZOS3));
     rb_define_const(mILU, "SCALE_MITCHELL", INT2NUM(ILU_SCALE_MITCHELL));
+
+    rb_define_const(mILU, "PLACEMENT", INT2NUM(ILU_PLACEMENT));
+    rb_define_const(mILU, "UPPER_LEFT", INT2NUM(ILU_UPPER_LEFT));
+    rb_define_const(mILU, "LOWER_LEFT", INT2NUM(ILU_LOWER_LEFT));
+    rb_define_const(mILU, "LOWER_RIGHT", INT2NUM(ILU_LOWER_RIGHT));
+    rb_define_const(mILU, "UPPER_RIGHT", INT2NUM(ILU_UPPER_RIGHT));
+    rb_define_const(mILU, "CENTER", INT2NUM(ILU_CENTER));
+    /* end of constants added by banisterfiend */
+
 }

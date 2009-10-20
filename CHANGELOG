@@ -1,16 +1,37 @@
-2009-15-06 John Mair (Banisterfiend)
+2009-10-21
+version 0.1.8
+* made LANCZOS3 scaling filter the default for highquality thumbnails
+* added blit function to HLA (high level API)
+* added mirror, edge_detect, emboss, enlarge_canvas, etc to HLA
+* added ILU_CENTER, ILU_LOWER_LEFT, ILU_PLACEMENT etc to LLA
+* include ILU and IL modules in Devil::Image now
+* made Devil::Image#show return self
+* made Devil::Image#show use a dup of the image (so a 'snapshot' is taken of image)
+* added Devil.set_options method to HLA
+* refactored HLA to use an 'action' method, saved code duplication of set_binding/error_check etc.
+
+2009-10-17 John Mair (Banisterfiend)
+* ruby_il.c added:
+* constants: IMAGE_DEPTH, ORIGIN_SET, CONV_PAL, CUR_IMAGE, ORIGIN_LOWER_LEFT, ORIGIN_LOWER_RIGHT
+* methods: Disable, OriginFunc, ClearColour, ClearImage.
+* Modified FromBlob method to restore old binding after use.
+* ruby_ilu.c added:
+* methods: EnlargeCanvas, EdgeDetectP, EdgeDetectS, Emboss, Mirror, SwapColours.
+* Modified Crop to now take z-axis parameters. (stick to original API as closely as possible)
+
+2009-10-15 John Mair (Banisterfiend)
 * hopefully fixed compile errors on SnowLeopard!
 * added error checking to Devil::load_image()
 * added monkeypatch to Gosu::Image::new() to transparently load multiple formats
 * updated some rdoc
 
-2009-13-06 John Mair (Banisterfiend)
+2009-10-13 John Mair (Banisterfiend)
 * version 0.1.6
 * added Gosu and TexPlay interoperability
 * ...bunch of other miscellaneous functionality
 * released gem
 
-2009-12-06 John Mair (Banisterfiend)
+2009-10-10 John Mair (Banisterfiend)
 * constants added to ruby_il.c:
 * IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_FORMAT, FILE_OVERWRITE
 * functions added to ruby_il.c:

@@ -1,10 +1,14 @@
 require 'rake/clean'
-require 'rake/extensiontask'
+
+if RUBY_PLATFORM !~ /win32/
+    require 'rake/extensiontask'
+end
+
 require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-DEVIL_VERSION = "0.1.6"
+DEVIL_VERSION = "0.1.8"
 
 dlext = Config::CONFIG['DLEXT']
 
@@ -51,10 +55,12 @@ end
 
 task :compile => :clean
 
-Rake::ExtensionTask.new('devil', spec)  do |ext|
-    ext.config_script = 'extconf.rb' 
-    ext.cross_compile = true                
-    ext.cross_platform = 'i386-mswin32'
+if RUBY_PLATFORM !~ /win32/
+    Rake::ExtensionTask.new('devil', spec)  do |ext|
+        ext.config_script = 'extconf.rb' 
+        ext.cross_compile = true                
+        ext.cross_platform = 'i386-mswin32'
+    end
 end
 
 Rake::TestTask.new do |t|

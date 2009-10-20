@@ -151,7 +151,7 @@ static VALUE il_GetData(VALUE obj) {
 /*     void* data = ImageData2Arr(rb_data); */
 
 /*     ILuint uint = ilCopyPixels(XOff, YOff, ZOff, Width, Height, Depth, Format, Type, data); */
-/*     return INT2FIX(uint);     */
+/*     return INT2FIX(uint); */
 /* } */
 
 static VALUE il_SetData(VALUE obj, VALUE rb_Data) {
@@ -242,6 +242,13 @@ static VALUE il_Enable(VALUE obj, VALUE rb_mode) {
     return flag ? Qtrue : Qfalse;
 }
 
+static VALUE il_Disable(VALUE obj, VALUE rb_mode) {
+    ILenum mode = NUM2INT(rb_mode);
+
+    ILboolean flag = ilDisable(mode);
+    return flag ? Qtrue : Qfalse;
+}
+
 static VALUE il_GetInteger(VALUE obj, VALUE rb_mode) {
     ILenum mode = NUM2INT(rb_mode);
 
@@ -282,16 +289,21 @@ static VALUE bf_FromBlob(VALUE obj, VALUE blob, VALUE rb_width, VALUE rb_height)
     ILubyte * data;
     ILuint width, height;
     ILuint image;
+    ILuint saved_image;
 
     width = NUM2INT(rb_width);
     height = NUM2INT(rb_height);
 
     data = (ILubyte *) RSTRING_PTR(blob);
 
+    saved_image = ilGetInteger(IL_CUR_IMAGE);
+
     ilGenImages(1, &image);
     ilBindImage(image);
 
     ilTexImage(width, height, 1, 4, IL_RGBA, IL_UNSIGNED_BYTE, data);
+
+    ilBindImage(saved_image);
 
     return INT2NUM(image);
 }
@@ -301,6 +313,32 @@ static VALUE il_CloneCurImage(VALUE obj)
     ILuint clone = ilCloneCurImage();
 
     return INT2NUM(clone);
+}
+
+static VALUE il_OriginFunc(VALUE obj, VALUE rb_mode)
+{
+    ILenum mode = NUM2INT(rb_mode);
+
+    ILboolean flag = ilOriginFunc(mode);
+    return flag ? Qtrue : Qfalse;    
+}
+
+static VALUE il_ClearColour(VALUE obj, VALUE rb_red, VALUE rb_green, VALUE rb_blue, VALUE rb_alpha)
+{
+    ILubyte red = NUM2INT(rb_red);
+    ILubyte green = NUM2INT(rb_green);
+    ILubyte blue = NUM2INT(rb_blue);
+    ILubyte alpha = NUM2INT(rb_alpha);
+
+    ilClearColour(red, green, blue, alpha);
+
+    return Qnil;
+}
+
+static VALUE il_ClearImage(VALUE obj)
+{
+    ILboolean flag = ilClearImage();
+    return flag ? Qtrue : Qfalse;
 }
 /* end of banisterfiend additions */
 
@@ -338,11 +376,15 @@ InitializeIL() {
 
     /* methods added by baniterfiend */
     rb_define_module_function(mIL, "Enable", il_Enable, 1);
+    rb_define_module_function(mIL, "Disable", il_Disable, 1);
     rb_define_module_function(mIL, "GetInteger", il_GetInteger, 1);
     rb_define_module_function(mIL, "ConvertImage", il_ConvertImage, 2);
     rb_define_module_function(mIL, "ToBlob", bf_ToBlob, 0);
     rb_define_module_function(mIL, "FromBlob", bf_FromBlob, 3);
     rb_define_module_function(mIL, "CloneCurImage", il_CloneCurImage, 0);
+    rb_define_module_function(mIL, "OriginFunc", il_OriginFunc, 1);
+    rb_define_module_function(mIL, "ClearColour", il_ClearColour, 4);
+    rb_define_module_function(mIL, "ClearImage", il_ClearImage, 0);
     /* end of methods added by banisterfiend */
     
     //////////////////////////////////
@@ -434,11 +476,17 @@ InitializeIL() {
     rb_define_const(mIL, "LIB_MNG_ERROR", INT2NUM(IL_LIB_MNG_ERROR));
     rb_define_const(mIL, "UNKNOWN_ERROR", INT2NUM(IL_UNKNOWN_ERROR));
 
-    // CONSTANTS BELOW ADDED BY BANISTERFIEND
+    /* CONSTANTS BELOW ADDED BY BANISTERFIEND */
+    rb_define_const(mIL, "IMAGE_DEPTH", INT2NUM(IL_IMAGE_DEPTH));
     rb_define_const(mIL, "IMAGE_WIDTH", INT2NUM(IL_IMAGE_WIDTH));
     rb_define_const(mIL, "IMAGE_HEIGHT", INT2NUM(IL_IMAGE_HEIGHT));
     rb_define_const(mIL, "IMAGE_FORMAT", INT2NUM(IL_IMAGE_FORMAT));
     rb_define_const(mIL, "FILE_OVERWRITE", INT2NUM(IL_FILE_OVERWRITE));
+    rb_define_const(mIL, "ORIGIN_SET", INT2NUM(IL_ORIGIN_SET));
+    rb_define_const(mIL, "CONV_PAL", INT2NUM(IL_CONV_PAL));
+    rb_define_const(mIL, "CUR_IMAGE", INT2NUM(IL_CUR_IMAGE));
+    rb_define_const(mIL, "ORIGIN_LOWER_LEFT", INT2NUM(IL_ORIGIN_LOWER_LEFT));
+    rb_define_const(mIL, "ORIGIN_UPPER_LEFT", INT2NUM(IL_ORIGIN_UPPER_LEFT));
 }
 //////////////////////////////////////////
 

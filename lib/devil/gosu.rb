@@ -83,13 +83,15 @@ class Devil::Image
     # if +x+ and +y+ are specified then show the image centered at this location, otherwise
     # draw the image at the center of the screen 
     # This method is only available if require 'devil/gosu' is used
-    def show(x = 512, y = 384)
+    def show(x = Devil.get_options[:window_size][0] / 2,
+             y = Devil.get_options[:window_size][1] / 2)
+        
         if !Devil.const_defined?(:Window)
             c = Class.new(Gosu::Window) do
                 attr_accessor :show_list
                 
                 def initialize
-                    super(1024, 768, false)
+                    super(Devil.get_options[:window_size][0], Devil.get_options[:window_size][1], false)
                     @show_list = []
                 end
 
@@ -106,7 +108,10 @@ class Devil::Image
 
             at_exit { @@window.show }
         end
-        
-        @@window.show_list.push :image => Gosu::Image.new(@@window, self), :x => x, :y => y
+
+        # note we dup the image so the displayed image is a snapshot taken at the time #show is invoked
+        @@window.show_list.push :image => Gosu::Image.new(@@window, self.dup), :x => x, :y => y
+
+        self
     end
 end
