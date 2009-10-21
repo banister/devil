@@ -1,4 +1,8 @@
-2009-10-21
+2009-10-22 John Mair (Banisterfiend)
+* added ESC exit from Devil::Image#show
+* added optional :filter parameter to Devil::Image#thumbnail and Devil::Image#resize
+
+2009-10-21 John Mair (Banisterfiend)
 version 0.1.8
 * made LANCZOS3 scaling filter the default for highquality thumbnails
 * changed clear color to DevIL default (mother of pearl and full alpha)
