@@ -40,10 +40,8 @@ class Gosu::Window
             glEnable(GL_TEXTURE_2D)
             glBindTexture(GL_TEXTURE_2D, canvas_texture_id)
             
-            glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, 1)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, self.width, self.height, 0, GL_RGB, GL_UNSIGNED_BYTE, "\0" * self.width * self.height * 3)
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, self.width, self.height, 0,
+                         GL_RGB, GL_UNSIGNED_BYTE, "\0" * self.width * self.height * 3)
             
             glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, self.width, self.height, 0)
 
@@ -98,6 +96,8 @@ class Devil::Image
 
                 def draw    # :nodoc:
                     @show_list.each { |v| v[:image].draw_rot(v[:x], v[:y], 1, 0) }
+
+                    exit if button_down?(Gosu::KbEscape)
                 end
             end
 

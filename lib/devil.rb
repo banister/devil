@@ -158,19 +158,30 @@ module Devil
         end
         
         # resize the image to +width+ and +height+. Aspect ratios of the image do not have to be the same.
-        def resize(width, height)
-            action { ILU.Scale(width, height, 1) }
+        # Optional :filter hash parameter that maps to a valid scale filter
+        # (see: Devil.set_options :scale_filter)
+        def resize(width, height, options = {})
+            filter = options[:filter]
+
+            action do
+                ILU.ImageParameter(ILU::FILTER, filter) if filter
+                ILU.Scale(width, height, 1)
+                ILU.ImageParameter(ILU::FILTER, Devil.get_options[:scale_filter]) if filter
+            end
+            
             self
         end
 
-        # Creates a proportional thumbnail of the image scaled so its longest.
+        # Creates a proportional thumbnail of the image scaled so its longest
         # edge is resized to +size+.
-        def thumbnail(size)
+        # Optional :filter hash parameter that maps to a valid scale filter
+        # (see: Devil.set_options :scale_filter)
+        def thumbnail(size, options = {})
 
             # this thumbnail code from image_science.rb
             w, h = width, height
             scale = size.to_f / (w > h ? w : h)
-            resize((w * scale).to_i, (h * scale).to_i)
+            resize((w * scale).to_i, (h * scale).to_i, options)
             self
         end
 
