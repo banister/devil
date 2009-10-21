@@ -1,3 +1,5 @@
+# (C) John Mair 2009, under the MIT licence
+
 require 'rbconfig'
 
 direc = File.dirname(__FILE__)
@@ -51,10 +53,10 @@ module Devil
         end
 
         # configure Devil.
-        # accepts hash parameters: +:scale_filter+, +:placement+, +:clear_color+,
-        # +:window_size+, +:edge_filter+.
+        # accepts hash parameters: :scale_filter, :placement, :clear_color,
+        # :window_size, :edge_filter.
         #
-        # :scale_filter accepts a valid scaling algorithm: (default is LANCZOS3)
+        # :scale_filter accepts a valid scaling algorithm: (default is LANCZOS3).
         # Devil::NEAREST, Devil::LINEAR, Devil::BILINEAR, Devil::SCALE_BOX,
         # Devil::SCALE_TRIANGLE, Devil::SCALE_BELL, Devil::SCALE_BSPLINE,
         # Devil::SCALE_LANCZOS3, Devil::SCALE_MITCHELL
@@ -109,16 +111,16 @@ module Devil
                 :scale_filter => ILU::SCALE_LANCZOS3,
                 :edge_filter => :prewitt,
                 :window_size => [1024, 768],
-                :clear_color => [0, 0, 0, 0],
+                :clear_color => [255, 248, 230, 0],
                 :placement => ILU::CENTER,
             }
             
-            # configurable
+            # configurable options
             ILU.ImageParameter(ILU::FILTER, @options[:scale_filter])
             ILU.ImageParameter(ILU::PLACEMENT, @options[:placement])
             IL.ClearColour(*@options[:clear_color])
 
-            # fixed
+            # fixed options
             IL.Enable(IL::FILE_OVERWRITE)
         end
     end
@@ -332,7 +334,7 @@ module Devil
             self
         end
 
-        # rotate an image about its central point by +angle+ degrees.
+        # rotate an image about its central point by +angle+ degrees (counter clockwise).
         def rotate(angle)
             action { ILU.Rotate(angle) }
             self

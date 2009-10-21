@@ -1,6 +1,7 @@
 2009-10-21
 version 0.1.8
 * made LANCZOS3 scaling filter the default for highquality thumbnails
+* changed clear color to DevIL default (mother of pearl and full alpha)
 * added blit function to HLA (high level API)
 * added mirror, edge_detect, emboss, enlarge_canvas, etc to HLA
 * added ILU_CENTER, ILU_LOWER_LEFT, ILU_PLACEMENT etc to LLA

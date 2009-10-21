@@ -265,13 +265,22 @@ static VALUE il_ConvertImage(VALUE obj, VALUE rb_destformat, VALUE rb_desttype)
     return flag ? Qtrue : Qfalse;
 }
 
+/* TODO: MAKE SURE NO MEMORY LEAKS! */
 /* this function is not actualy in the DevIL API, but im adding it here for convenience */
 static VALUE bf_ToBlob(VALUE obj)
 {
-    ILuint width, height;
+    ILuint width, height, saved_image, copy_image;
     char * img_ptr;
     VALUE blob;
+
+    saved_image = ilGetInteger(IL_CUR_IMAGE);
+
+    /* make a copy of the current image */
+    copy_image = ilCloneCurImage();
+
+    ilBindImage(copy_image);
     
+    /* ensure the image is int RGBA UNSIGNED_BYTE format for blob */
     ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 
     width = ilGetInteger(IL_IMAGE_WIDTH);
@@ -280,6 +289,11 @@ static VALUE bf_ToBlob(VALUE obj)
     img_ptr = (char *)ilGetData();
 
     blob = rb_str_new(img_ptr, 4 * width * height);
+
+    /* restore saved binding */
+    ilBindImage(saved_image);
+
+    ilDeleteImages(1, &copy_image);
 
     return blob;
 }
