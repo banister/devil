@@ -10,6 +10,7 @@ module TexPlay
         capture { 
             to_devil.save(file)
         }
+        self
     end
 
     # convert a Gosu::Image to a Devil::Image.
