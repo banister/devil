@@ -6,11 +6,6 @@ require 'rubygems'
 require 'devil/gosu'
 
 Devil.load("texture.png") do |img|
-    #img.thumbnail(150)
-    img.show
-    ILU.ImageParameter(ILU::FILTER, ILU::NEAREST)
-    bspline = img.dup
-    bspline.thumbnail(150)
-    bspline.show(800,300)
+    img.thumbnail(150).show
 end
 
