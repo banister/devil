@@ -63,7 +63,7 @@ module Devil
         #
         # :placement determines where in the canvas the image will be placed after
         # the canvas has been enlarged using the 'enlarge_canvas' method.
-        # Valid parameters are: Devil::Center, Devil::LOWER_LEFT, Devil::UPPER_RIGHT, etc
+        # Valid parameters are: Devil::CENTER, Devil::LOWER_LEFT, Devil::UPPER_RIGHT, etc
         #
         # :clear_color  sets the current clearing colour to be used by future
         # calls to clear. rotate and enlarge_canvas both use these values to
