@@ -119,7 +119,12 @@ static VALUE il_TexImage(VALUE obj, VALUE rb_width, VALUE rb_height,
     ILenum type = NUM2INT(rb_type);
 
     /* from ILvoid */
-    void* data = ImageData2Arr(rb_data);
+    void * data = NULL;
+    
+    if(NIL_P(rb_data))
+        data = NULL;
+    else
+        data = ImageData2Arr(rb_data);
 
     ILboolean flag = ilTexImage(width, height, depth,
                                 bpp, format, type, data);
@@ -249,6 +254,22 @@ static VALUE il_Disable(VALUE obj, VALUE rb_mode) {
     return flag ? Qtrue : Qfalse;
 }
 
+static VALUE il_ApplyProfile(VALUE obj, VALUE rb_inprofile, VALUE rb_outprofile)
+{
+    char * inprofile = NULL;
+    char * outprofile = StringValuePtr(rb_outprofile);
+    ILboolean flag;
+
+    if(NIL_P(rb_inprofile))
+        inprofile = NULL;
+    else
+        inprofile = StringValuePtr(rb_inprofile);
+
+    flag = ilApplyProfile(inprofile, outprofile);
+
+    return flag ? Qtrue : Qfalse;
+}
+
 static VALUE il_GetInteger(VALUE obj, VALUE rb_mode) {
     ILenum mode = NUM2INT(rb_mode);
 
@@ -266,7 +287,7 @@ static VALUE il_ConvertImage(VALUE obj, VALUE rb_destformat, VALUE rb_desttype)
 }
 
 /* TODO: MAKE SURE NO MEMORY LEAKS! */
-/* this function is not actualy in the DevIL API, but im adding it here for convenience */
+/* this function is not actually in the DevIL API, but im adding it here for convenience */
 static VALUE bf_ToBlob(VALUE obj)
 {
     ILuint width, height, saved_image, copy_image;
@@ -399,6 +420,7 @@ InitializeIL() {
     rb_define_module_function(mIL, "OriginFunc", il_OriginFunc, 1);
     rb_define_module_function(mIL, "ClearColour", il_ClearColour, 4);
     rb_define_module_function(mIL, "ClearImage", il_ClearImage, 0);
+    rb_define_module_function(mIL, "ApplyProfile", il_ApplyProfile, 2);
     /* end of methods added by banisterfiend */
     
     //////////////////////////////////

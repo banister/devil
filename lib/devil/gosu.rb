@@ -1,3 +1,5 @@
+# (C) John Mair 2009, under the MIT licence
+
 require 'texplay'
 require 'devil'
 
@@ -19,7 +21,7 @@ module TexPlay
         devil_img = nil
         capture {
             devil_img = Devil.from_blob(self.to_blob, self.width, self.height)
-            devil_img.flip
+            devil_img
         }
         devil_img
     end
@@ -63,7 +65,7 @@ class Gosu::Image
             if file.respond_to?(:to_blob) || file =~ /\.(bmp|png)$/
                 original_new_redux(window, file, *args, &block)
             else 
-                original_new_redux(window, Devil.load(file), *args, &block)
+                original_new_redux(window, Devil.load(file).flip, *args, &block)
             end
         end
     end
@@ -111,7 +113,7 @@ class Devil::Image
         end
 
         # note we dup the image so the displayed image is a snapshot taken at the time #show is invoked
-        @@window.show_list.push :image => Gosu::Image.new(@@window, self.dup), :x => x, :y => y
+        @@window.show_list.push :image => Gosu::Image.new(@@window, self.dup.flip), :x => x, :y => y
 
         self
     end
