@@ -1,3 +1,14 @@
+2009-10-25 John Mair (Banisterfiend)
+version 0.1.8.5
+* added hooks: prepare_image_hook, create_image_hook, load_image_hook 
+* e.g Devil.set_options :load_image_hook => proc { IL::ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE) }
+* added Devil.create_image() method for creating blank images (useful as a blitting canvas?)
+* added :color parameter to create_image (to set background color of new image)
+* added :in_profile and :out_profile to Devil.load_image and Devil.create_image
+* color profiles do not appear to work! so not officially supported or documented.
+* fixed gosu image flip bug
+* added more tests and rdoc
+
 2009-10-22 John Mair (Banisterfiend)
 * added ESC exit from Devil::Image#show
 * added optional :filter parameter to Devil::Image#thumbnail and Devil::Image#resize

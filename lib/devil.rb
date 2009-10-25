@@ -19,16 +19,25 @@ module Devil
     include IL
     include ILU
 
-    VERSION = '0.1.8'
+    VERSION = '0.1.8.5'
     
     class << self
 
         # loads +file+ and returns a new image
         # Optionally accepts a block and yields the newly created image to the block.
         def load_image(file, options={}, &block)
-            name = prepare_image(options)
+            name = prepare_image
+            out_profile = options[:out_profile]
+            in_profile = options[:in_profile]
             
             IL.LoadImage(file)
+
+            # apply a color profile if one is provided
+            IL.ApplyProfile(in_profile, out_profile) if out_profile
+
+            # run the proc (if it exists)
+            load_image_proc = Devil.get_options[:load_image_hook]
+            load_image_proc.call if load_image_proc            
 
             if (error_code = IL.GetError) != IL::NO_ERROR
                 raise RuntimeError, "an error occured while trying to "+
@@ -47,19 +56,29 @@ module Devil
         alias_method :load, :load_image
 
         # returns a blank image of +width+ and +height+.
+        # Optionally accepts the :color hash param that fills the new image with a color
+        # (see: Devil.set_options :clear_color)
         # Optionally accepts a block and yields the newly created image to the block.
         def create_image(width, height, options={}, &block)
-            name = prepare_image(options)
+            name = prepare_image
+            out_profile = options[:out_profile]
+            in_profile = options[:in_profile]
 
             clear_color = options[:color]
 
             IL.TexImage(width, height, 1, 4, IL::RGBA, IL::UNSIGNED_BYTE, nil)
 
+            # apply a color profile if one is provided
+            IL.ApplyProfile(in_profile, out_profile) if out_profile            
+
             IL.ClearColour(*clear_color) if clear_color
             IL.ClearImage
             IL.ClearColour(*Devil.get_options[:clear_color]) if clear_color
 
-            
+            # run the proc (if it exists)
+            create_image_proc = Devil.get_options[:create_image_hook]
+            create_image_proc.call if create_image_proc
+
             if (error_code = IL.GetError) != IL::NO_ERROR
                 raise RuntimeError, "an error occured while trying to "+
                     "create an image. #{ILU.ErrorString(error_code)}"
@@ -114,7 +133,7 @@ module Devil
         def set_options(options={})
             @options.merge!(options)
 
-            # update the scale_filter 
+            # update the config. options 
             ILU.ImageParameter(ILU::FILTER, @options[:scale_filter])
             ILU.ImageParameter(ILU::PLACEMENT, @options[:placement])
             IL.ClearColour(*@options[:clear_color])
@@ -143,6 +162,9 @@ module Devil
                 :window_size => [1024, 768],
                 :clear_color => [255, 248, 230, 0],
                 :placement => ILU::CENTER,
+                :prepare_image_hook => nil,
+                :load_image_hook => nil,
+                :create_image_hook => nil,
             }
             
             # configurable options
@@ -160,20 +182,19 @@ module Devil
 
         private
 
-        def prepare_image(options)
-            out_profile = options[:out_profile]
-            in_profile = options[:in_profile]
-            
+        def prepare_image
             name = IL.GenImages(1).first
             IL.BindImage(name)
 
-            # apply a color profile if one is provided
-            IL.ApplyProfile(in_profile, out_profile) if out_profile
+            # run the proc (if it exists)
+            prepare_image_proc = Devil.get_options[:prepare_image_hook]
+            prepare_image_proc.call if prepare_image_proc
 
             name
         end
     end
 end
+# end of Devil module 
 
 # wraps a DevIL image
 class Devil::Image
@@ -239,7 +260,7 @@ class Devil::Image
     # return a deep copy of the current image.
     def dup
         new_image_name = action { IL.CloneCurImage }
-        Image.new(new_image_name, nil)
+        Devil::Image.new(new_image_name, nil)
     end
 
     alias_method :clone, :dup
@@ -294,6 +315,8 @@ class Devil::Image
     end
 
     # use prewitt or sobel filters to detect the edges in the current image.
+    # Optional :filter hash parameter selects filter to use (:prewitt or :sobel).
+    # (see: Devil.set_options :edge_filter)    
     def edge_detect(options={})
         options = {
             :filter => Devil.get_options[:edge_filter]

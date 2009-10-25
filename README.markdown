@@ -1,6 +1,6 @@
 ![Alt text](http://dl.getdropbox.com/u/239375/DevIL.png)
 
-Ruby Devil version 0.1.8
+Ruby Devil version 0.1.8.5
 ========================
 
 * Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
