@@ -130,6 +130,10 @@ module Devil
         # :edge_filter sets the edge detection algorithm to use when invoking
         # the 'edge_detect' method. (defaults to :prewitt)
         # Allowed values are :prewitt and :sobel
+        #
+        # hooks:
+        # :prepare_image_hook, :create_image_hook, :load_image_hook
+        # e.g Devil.set_options :load_image_hook => proc { IL::ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE) }
         def set_options(options={})
             @options.merge!(options)
 

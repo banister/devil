@@ -117,6 +117,7 @@ static VALUE il_TexImage(VALUE obj, VALUE rb_width, VALUE rb_height,
     ILubyte bpp = NUM2INT(rb_bpp);
     ILenum format = NUM2INT(rb_format);
     ILenum type = NUM2INT(rb_type);
+    ILboolean flag;
 
     /* from ILvoid */
     void * data = NULL;
@@ -126,7 +127,7 @@ static VALUE il_TexImage(VALUE obj, VALUE rb_width, VALUE rb_height,
     else
         data = ImageData2Arr(rb_data);
 
-    ILboolean flag = ilTexImage(width, height, depth,
+    flag = ilTexImage(width, height, depth,
                                 bpp, format, type, data);
     return flag ? Qtrue : Qfalse;
 }
