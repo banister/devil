@@ -436,7 +436,7 @@ InitializeIL() {
     rb_define_const(mIL, "JPG", INT2NUM(IL_JPG));
     rb_define_const(mIL, "JFIF", INT2NUM(IL_JFIF));
     
-#ifdef _WIN32    
+#ifndef IL_LBM   
     rb_define_const(mIL, "LBM", INT2NUM(IL_ILBM));
 #else
     rb_define_const(mIL, "LBM", INT2NUM(IL_LBM));

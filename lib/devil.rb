@@ -32,12 +32,14 @@ module Devil
             
             IL.LoadImage(file)
 
+            IL.ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE)
+
             # apply a color profile if one is provided
             IL.ApplyProfile(in_profile, out_profile) if out_profile
 
             # run the proc (if it exists)
             load_image_proc = Devil.get_options[:load_image_hook]
-            load_image_proc.call if load_image_proc            
+            load_image_proc.call if load_image_proc        
 
             if (error_code = IL.GetError) != IL::NO_ERROR
                 raise RuntimeError, "an error occured while trying to "+

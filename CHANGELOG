@@ -1,3 +1,7 @@
+2009-10-28 John Mair (Banisterfiend)
+* added IL::ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE) to Devil#load; ensures that all image data is in the same format (image files only support RGB/UB and RGBA/UB so make them all RGBA/UB)
+* changed compile-time conditional for the IL_LBM constant. now checks if IL_LBM is defined before it tries IL_ILBM
+
 2009-10-25 John Mair (Banisterfiend)
 version 0.1.8.5
 * added hooks: prepare_image_hook, create_image_hook, load_image_hook 
