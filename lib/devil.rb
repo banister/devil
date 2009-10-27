@@ -32,14 +32,14 @@ module Devil
             
             IL.LoadImage(file)
 
+            # ensure all images are formatted RGBA8
             IL.ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE)
 
             # apply a color profile if one is provided
             IL.ApplyProfile(in_profile, out_profile) if out_profile
 
-            # run the proc (if it exists)
-            load_image_proc = Devil.get_options[:load_image_hook]
-            load_image_proc.call if load_image_proc        
+            # run the load image hook (if it exists)
+            check_and_run_hook(:load_image_hook)
 
             if (error_code = IL.GetError) != IL::NO_ERROR
                 raise RuntimeError, "an error occured while trying to "+
@@ -68,6 +68,7 @@ module Devil
 
             clear_color = options[:color]
 
+            # created image is formatted RGBA8
             IL.TexImage(width, height, 1, 4, IL::RGBA, IL::UNSIGNED_BYTE, nil)
 
             # apply a color profile if one is provided
@@ -77,10 +78,9 @@ module Devil
             IL.ClearImage
             IL.ClearColour(*Devil.get_options[:clear_color]) if clear_color
 
-            # run the proc (if it exists)
-            create_image_proc = Devil.get_options[:create_image_hook]
-            create_image_proc.call if create_image_proc
-
+            # run the create image hook (if it exists)
+            check_and_run_hook(:create_image_hook)
+            
             if (error_code = IL.GetError) != IL::NO_ERROR
                 raise RuntimeError, "an error occured while trying to "+
                     "create an image. #{ILU.ErrorString(error_code)}"
@@ -192,15 +192,18 @@ module Devil
             name = IL.GenImages(1).first
             IL.BindImage(name)
 
-            # run the proc (if it exists)
-            prepare_image_proc = Devil.get_options[:prepare_image_hook]
-            prepare_image_proc.call if prepare_image_proc
+            # run the prepare image hook (if it exists)
+            check_and_run_hook(:prepare_image_hook)
 
             name
         end
+
+        def check_and_run_hook(hook_name)
+            Devil.get_options[hook_name].call if Devil.get_options[hook_name]
+        end
     end
 end
-# end of Devil module 
+## end of Devil module 
 
 # wraps a DevIL image
 class Devil::Image
@@ -461,5 +464,7 @@ class Devil::Image
         result
     end
 end
+## end of Devil::Image
 
+# initialize Devil and set default config
 Devil.init
