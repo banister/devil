@@ -7,6 +7,7 @@ require 'devil/gosu'
 
 Devil.with_image("#{$direc}/texture.png") do |img|
     img2 = Devil.load("#{$direc}/red.png")
+    img2.free
 
     img.show(200,200)
 

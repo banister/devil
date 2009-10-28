@@ -49,9 +49,10 @@ module Devil
             img = Image.new(name, file)
             if block
                 block.call(img)
+                img.free
+            else
+                img
             end
-            
-            img
         end
 
         alias_method :with_image, :load_image
@@ -86,12 +87,12 @@ module Devil
                     "create an image. #{ILU.ErrorString(error_code)}"
             end
 
-            img = Image.new(name, nil)
             if block
                 block.call(img)
+                img.free
+            else
+                img
             end
-            
-            img
         end
 
         alias_method :create_blank_image, :create_image
@@ -212,9 +213,19 @@ class Devil::Image
     def initialize(name, file)
         @name = name
         @file = file
-
-        ObjectSpace.define_finalizer( self, proc { IL.DeleteImages(1, [name]) } )
     end
+
+    # Frees the memory associated with the image.
+    # Must be called explictly if load_image or create_image is invoked without a block.
+    def free
+        set_binding
+        IL.DeleteImages([@name])
+        @name = nil
+        nil
+    end
+
+    alias_method :close, :free
+    alias_method :delete, :free
     
     # returns the width of the image.
     def width
@@ -447,6 +458,7 @@ class Devil::Image
     private
 
     def set_binding
+        raise "Error: trying to use image that has already been freed!" if !@name
         IL.BindImage(@name)
     end
 

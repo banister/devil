@@ -80,21 +80,21 @@ static VALUE il_DeleteImages(VALUE obj, VALUE images) {
 }
 
 static VALUE il_LoadImage(VALUE obj, VALUE rb_filename) {
-    char* filename = STR2CSTR(rb_filename);
+    char* filename = StringValuePtr(rb_filename);
     ILboolean load = ilLoadImage(filename);
     return load ? Qtrue : Qfalse;
 }
 
 static VALUE il_Load(VALUE obj, VALUE rb_type, VALUE rb_filename) {
     ILenum type = NUM2INT(rb_type);
-    char* filename = STR2CSTR(rb_filename);
+    char* filename = StringValuePtr(rb_filename);
 
     ILboolean load = ilLoad(type, filename);
     return load ? Qtrue : Qfalse;
 }
 
 static VALUE il_SaveImage(VALUE obj, VALUE rb_filename) {
-    char* filename = STR2CSTR(rb_filename);
+    char* filename = StringValuePtr(rb_filename);
     ILboolean load = ilSaveImage(filename);
 
     return load ? Qtrue : Qfalse;
@@ -102,7 +102,7 @@ static VALUE il_SaveImage(VALUE obj, VALUE rb_filename) {
 
 static VALUE il_Save(VALUE obj, VALUE rb_type, VALUE rb_filename) {
     ILenum type = NUM2INT(rb_type);
-    char* filename = STR2CSTR(rb_filename);
+    char* filename = StringValuePtr(rb_filename);
     ILboolean load = ilSave(type, filename);
 
     return load ? Qtrue : Qfalse;
