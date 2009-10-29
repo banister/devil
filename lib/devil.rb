@@ -35,11 +35,8 @@ module Devil
             # apply a color profile if one is provided
             IL.ApplyProfile(in_profile, out_profile) if out_profile
 
-            # run the load image hook (if it exists)
             check_and_run_hook(:load_image_hook)
-            
             error_check
-     
             wrap_and_yield(name, file, block)
         end
 
@@ -67,11 +64,8 @@ module Devil
             IL.ClearImage
             IL.ClearColour(*Devil.get_options[:clear_color]) if clear_color
 
-            # run the create image hook (if it exists)
             check_and_run_hook(:create_image_hook)
-            
             error_check
-            
             wrap_and_yield(name, nil, block)
         end
 
@@ -198,7 +192,6 @@ module Devil
             name = IL.GenImages(1).first
             IL.BindImage(name)
 
-            # run the prepare image hook (if it exists)
             check_and_run_hook(:prepare_image_hook)
 
             name
