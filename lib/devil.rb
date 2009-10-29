@@ -40,18 +40,7 @@ module Devil
             
             error_check
      
-            img = Image.new(name, file)
-            if block
-                begin
-                    block.call(img)
-                ensure
-                    # don't bother freeing it if it's already free
-                    img.free if img.name
-                end
-            else
-                # ObjectSpace.define_finalizer(img, proc { IL.DeleteImages([img.name]) if img.name })
-                img
-            end
+            wrap_and_yield(name, file, block)
         end
 
         alias_method :with_image, :load_image
@@ -83,17 +72,7 @@ module Devil
             
             error_check
             
-            img = Image.new(name, nil)
-            if block
-                begin
-                    block.call(img)
-                ensure
-                    img.free if img.name
-                end
-            else
-                # ObjectSpace.define_finalizer(img, proc { IL.DeleteImages([img.name]) if img.name })
-                img
-            end
+            wrap_and_yield(name, nil, block)
         end
 
         alias_method :create_blank_image, :create_image
@@ -230,6 +209,19 @@ module Devil
 
             # ensure all images are formatted RGBA8
             IL.ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE)
+        end
+
+        def wrap_and_yield(name, file, block)
+            img = Image.new(name, file)
+            if block
+                begin
+                    block.call(img)
+                ensure
+                    img.free if img.name
+                end
+            else
+                img
+            end            
         end
 
         def check_and_run_hook(hook_name)
