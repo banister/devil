@@ -1,3 +1,11 @@
+2009-10-29 John Mair (Banisterfiend)
+* version 0.1.8.8
+* added Devil.with_group (for loading multiple images into the same block)
+* all images passed into block are cleaned up at end of block
+* images at end of block are only free'd if they have not already been freed by user
+* ruby_il.c: added IMAGE_BITS_PER_PIXEL and IMAGE_BYTES_PER_PIXEL constants
+* finalizers still not implemented
+
 2009-10-28 John Mair (Banisterfiend)
 * removed finalizer and replaced with explicit call to image.free at end of block. If no block is used, user must call image.free at end of use
 * above fixes memory leak.

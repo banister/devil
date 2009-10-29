@@ -6,7 +6,7 @@ require 'rubygems'
 require 'devil/gosu'
 
 Devil.load("texture.png") do |img|
-    img.dup.thumbnail(150, :filter => Devil::NEAREST).show(100, 300)
-    img.dup.thumbnail(150).show(100, 100)
+    img.dup.thumbnail(150, :filter => Devil::NEAREST).show(100, 300).free
+    img.dup.thumbnail(150).show(100, 100).free
 end
 

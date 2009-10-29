@@ -19,7 +19,7 @@ module Devil
     include IL
     include ILU
 
-    VERSION = '0.1.8.5'
+    VERSION = '0.1.8.8'
     
     class << self
 
@@ -27,30 +27,29 @@ module Devil
         # Optionally accepts a block and yields the newly created image to the block.
         def load_image(file, options={}, &block)
             name = prepare_image
+            attach_image_from_file(file)
+            
             out_profile = options[:out_profile]
             in_profile = options[:in_profile]
             
-            IL.LoadImage(file)
-
-            # ensure all images are formatted RGBA8
-            IL.ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE)
-
             # apply a color profile if one is provided
             IL.ApplyProfile(in_profile, out_profile) if out_profile
 
             # run the load image hook (if it exists)
             check_and_run_hook(:load_image_hook)
-
-            if (error_code = IL.GetError) != IL::NO_ERROR
-                raise RuntimeError, "an error occured while trying to "+
-                    "load the image #{file}. #{ILU.ErrorString(error_code)}"
-            end
-
+            
+            error_check
+     
             img = Image.new(name, file)
             if block
-                block.call(img)
-                img.free
+                begin
+                    block.call(img)
+                ensure
+                    # don't bother freeing it if it's already free
+                    img.free if img.name
+                end
             else
+                # ObjectSpace.define_finalizer(img, proc { IL.DeleteImages([img.name]) if img.name })
                 img
             end
         end
@@ -82,22 +81,49 @@ module Devil
             # run the create image hook (if it exists)
             check_and_run_hook(:create_image_hook)
             
-            if (error_code = IL.GetError) != IL::NO_ERROR
-                raise RuntimeError, "an error occured while trying to "+
-                    "create an image. #{ILU.ErrorString(error_code)}"
-            end
-
+            error_check
+            
+            img = Image.new(name, nil)
             if block
-                block.call(img)
-                img.free
+                begin
+                    block.call(img)
+                ensure
+                    img.free if img.name
+                end
             else
+                # ObjectSpace.define_finalizer(img, proc { IL.DeleteImages([img.name]) if img.name })
                 img
             end
         end
 
         alias_method :create_blank_image, :create_image
-        alias_method :create_blank, :create_image
-        alias_method :blank_image, :create_image
+
+        # load multiple images and yield them to the block
+        # e.g Devil.with_group("hello.png", "friend.png") { |img1, img2| ... }
+        # all yielded images are cleaned up at end of block so you do not need to
+        # explictly call img1.free
+        def with_group(*files, &block)
+            images = files.map do |file|
+                name = prepare_image
+                attach_image_from_file(file)
+                check_and_run_hook(:load_image_hook)
+                error_check
+                
+                Image.new(name, file)
+            end
+
+            if block
+                begin
+                    block.call(*images)
+                ensure
+                    images.each { |img| img.free if img.name }
+                end
+            else
+                raise RuntimeError, "a block must be provided."
+            end
+        end
+
+        alias_method :with_images, :with_group
         
         # convert an image +blob+ with +width+ and +height+
         # to a bona fide image
@@ -199,8 +225,21 @@ module Devil
             name
         end
 
+        def attach_image_from_file(file)
+            IL.LoadImage(file)
+
+            # ensure all images are formatted RGBA8
+            IL.ConvertImage(IL::RGBA, IL::UNSIGNED_BYTE)
+        end
+
         def check_and_run_hook(hook_name)
             Devil.get_options[hook_name].call if Devil.get_options[hook_name]
+        end
+
+        def error_check
+            if (error_code = IL.GetError) != IL::NO_ERROR
+                raise RuntimeError, "An error occured. #{ILU.ErrorString(error_code)}"
+            end
         end
     end
 end
@@ -218,10 +257,10 @@ class Devil::Image
     # Frees the memory associated with the image.
     # Must be called explictly if load_image or create_image is invoked without a block.
     def free
-        set_binding
+        raise "Error: calling 'free' on already freed image! #{self}" if !@name
         IL.DeleteImages([@name])
+        error_check
         @name = nil
-        nil
     end
 
     alias_method :close, :free
@@ -458,7 +497,7 @@ class Devil::Image
     private
 
     def set_binding
-        raise "Error: trying to use image that has already been freed!" if !@name
+        raise "Error: trying to use image that has already been freed! #{self}" if !@name
         IL.BindImage(@name)
     end
 

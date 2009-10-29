@@ -518,6 +518,8 @@ InitializeIL() {
     rb_define_const(mIL, "IMAGE_WIDTH", INT2NUM(IL_IMAGE_WIDTH));
     rb_define_const(mIL, "IMAGE_HEIGHT", INT2NUM(IL_IMAGE_HEIGHT));
     rb_define_const(mIL, "IMAGE_FORMAT", INT2NUM(IL_IMAGE_FORMAT));
+    rb_define_const(mIL, "IMAGE_BITS_PER_PIXEL", INT2NUM(IL_IMAGE_BITS_PER_PIXEL));
+    rb_define_const(mIL, "IMAGE_BYTES_PER_PIXEL", INT2NUM(IL_IMAGE_BYTES_PER_PIXEL));
     rb_define_const(mIL, "FILE_OVERWRITE", INT2NUM(IL_FILE_OVERWRITE));
     rb_define_const(mIL, "ORIGIN_SET", INT2NUM(IL_ORIGIN_SET));
     rb_define_const(mIL, "CONV_PAL", INT2NUM(IL_CONV_PAL));

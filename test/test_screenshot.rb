@@ -22,7 +22,7 @@ class W < Gosu::Window
 
     def update
         if button_down?(Gosu::KbEscape)
-            screenshot.rotate(45).save("screenshot.png")
+            screenshot.rotate(45).save("screenshot.png").free
             exit
         end
     end

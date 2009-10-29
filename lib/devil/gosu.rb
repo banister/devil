@@ -9,8 +9,10 @@ module TexPlay
     # save a Gosu::Image to +file+
     # This method is only available if require 'devil/gosu' is used
     def save(file)
-        capture { 
-            to_devil.save(file)
+        capture {
+            img = to_devil
+            img.save(file)
+            img.free
         }
         self
     end
@@ -20,7 +22,7 @@ module TexPlay
     def to_devil
         devil_img = nil
         capture {
-            devil_img = Devil.from_blob(self.to_blob, self.width, self.height)
+            devil_img = Devil.from_blob(self.to_blob, self.width, self.height).flip
             devil_img
         }
         devil_img
@@ -64,8 +66,15 @@ class Gosu::Image
         def new(window, file, *args, &block)
             if file.respond_to?(:to_blob) || file =~ /\.(bmp|png)$/
                 original_new_redux(window, file, *args, &block)
-            else 
-                original_new_redux(window, Devil.load(file).flip, *args, &block)
+            else
+                img = Devil.load(file).flip
+                begin
+                    gosu_img = original_new_redux(window, img, *args, &block)
+                ensure
+                    img.free
+                end
+
+                gosu_img
             end
         end
     end
@@ -113,8 +122,11 @@ class Devil::Image
         end
 
         # note we dup the image so the displayed image is a snapshot taken at the time #show is invoked
-        @@window.show_list.push :image => Gosu::Image.new(@@window, self.dup.flip), :x => x, :y => y
 
+        img = self.dup.flip
+        @@window.show_list.push :image => Gosu::Image.new(@@window, img), :x => x, :y => y
+        img.free
+        
         self
     end
 end

@@ -10,10 +10,12 @@ class W < Gosu::Window
         super(1024, 768, false, 20)
 
         @img = Gosu::Image.new(self, "#{$direc}/texture.jpg")
-        @img = @img.to_devil.
-            emboss.
+        dimg = @img.to_devil
+        @img = dimg.emboss.
             rotate(45).
             to_gosu(self)
+        
+        dimg.free
     end
     
     def draw
@@ -24,4 +26,4 @@ end
 
 w = W.new
 w.show
-        
+

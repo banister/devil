@@ -15,6 +15,9 @@ img.rotate(rand(360))
 img.show(200,200)
 img_dup.show(450, 200)
 
+img.free
+img_dup.free
+
 
 
 
