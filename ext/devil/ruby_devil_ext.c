@@ -5,7 +5,5 @@ void
 Init_devil() {
     InitializeIL();
     InitializeILU();
-
-    /* turning off ILUT layer */
-    /*    InitializeILUT(); */
+    InitializeILUT();
 }

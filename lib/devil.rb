@@ -19,7 +19,7 @@ module Devil
     include IL
     include ILU
 
-    VERSION = '0.1.8.8'
+    VERSION = '0.1.9.0'
     
     class << self
 
