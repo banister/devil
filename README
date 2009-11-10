@@ -23,8 +23,8 @@ For Gentoo:
 
 For windows:
 
-* download devil.dll and ilu.dll from [http://github.com/banister/devil/downloads]
-* and copy these files to c:\windows\system\
+* download devil-dlls.zip from [http://github.com/banister/devil/downloads]
+* and copy the uncompressed files to c:\ruby\bin\
 
 For macosx:
 

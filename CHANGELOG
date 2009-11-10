@@ -1,3 +1,8 @@
+2009-11-10 John Mair (Banisterfiend)
+* version 0.1.9.0
+* added ILUT (OpenGL) support
+* updated installation info (no longer using c:\windows\system\ for dlls)
+
 2009-10-29 John Mair (Banisterfiend)
 * version 0.1.8.8
 * added Devil.with_group (for loading multiple images into the same block)
