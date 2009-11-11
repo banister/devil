@@ -5,5 +5,5 @@ void
 Init_devil() {
     InitializeIL();
     InitializeILU();
-    InitializeILUT();
+    /* InitializeILUT(); */
 }
