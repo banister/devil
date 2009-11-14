@@ -1,3 +1,11 @@
+2009-14-11 John Mair (Banisterfiend)
+* added to ruby_il.c:
+* IL::SetInteger, IL::JPG_QUALITY
+* added to ruby_ilu.c:
+* ILU::CompareImage
+* added test_quality.rb to tests
+* added :jpg_quality option parameter to Devil::Image#save
+
 2009-11-11 John Mair (Banisterfiend)
 * version 0.1.9.0 re-release
 * REMOVED ILUT (OpenGL) support because ILUT is not built with OpenGL support on all platforms (e.g gentoo and some ubuntu distros)

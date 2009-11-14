@@ -163,6 +163,14 @@ static VALUE ilu_SwapColours(VALUE obj)
     return flag ? Qtrue : Qfalse;    
 }
 
+static VALUE ilu_CompareImage(VALUE obj, VALUE rb_cmp_img)
+{
+    ILuint cmp_img = NUM2INT(rb_cmp_img);
+    
+    ILboolean flag = iluCompareImage(rb_cmp_img);
+
+    return flag ? Qtrue : Qfalse;
+}
 /* end of functions added by banisterfiend */
 
 void
@@ -194,6 +202,7 @@ InitializeILU() {
     rb_define_module_function(mILU, "Emboss", ilu_Emboss, 0);
     rb_define_module_function(mILU, "Mirror", ilu_Mirror, 0);
     rb_define_module_function(mILU, "SwapColours", ilu_SwapColours, 0);
+    rb_define_module_function(mILU, "CompareImage", ilu_CompareImage, 1);
     /* end of functions added by banisterfiend */
 
     /* constants added by banisterfiend */

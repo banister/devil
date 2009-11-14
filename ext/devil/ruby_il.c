@@ -376,6 +376,17 @@ static VALUE il_ClearImage(VALUE obj)
     ILboolean flag = ilClearImage();
     return flag ? Qtrue : Qfalse;
 }
+
+static VALUE il_SetInteger(VALUE obj, VALUE rb_mode, VALUE rb_param)
+{
+    ILenum mode = NUM2INT(rb_mode);
+    ILint param = NUM2INT(rb_param);
+
+    ilSetInteger(mode, param);
+
+    return Qnil;
+}
+
 /* end of banisterfiend additions */
 
 void
@@ -422,6 +433,7 @@ InitializeIL() {
     rb_define_module_function(mIL, "ClearColour", il_ClearColour, 4);
     rb_define_module_function(mIL, "ClearImage", il_ClearImage, 0);
     rb_define_module_function(mIL, "ApplyProfile", il_ApplyProfile, 2);
+    rb_define_module_function(mIL, "SetInteger", il_SetInteger, 2);
     /* end of methods added by banisterfiend */
     
     //////////////////////////////////
@@ -526,6 +538,7 @@ InitializeIL() {
     rb_define_const(mIL, "CUR_IMAGE", INT2NUM(IL_CUR_IMAGE));
     rb_define_const(mIL, "ORIGIN_LOWER_LEFT", INT2NUM(IL_ORIGIN_LOWER_LEFT));
     rb_define_const(mIL, "ORIGIN_UPPER_LEFT", INT2NUM(IL_ORIGIN_UPPER_LEFT));
+    rb_define_const(mIL, "JPG_QUALITY", INT2NUM(IL_JPG_QUALITY));
 }
 //////////////////////////////////////////
 

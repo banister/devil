@@ -142,6 +142,7 @@ module Devil
             # update the config. options 
             ILU.ImageParameter(ILU::FILTER, @options[:scale_filter])
             ILU.ImageParameter(ILU::PLACEMENT, @options[:placement])
+            IL.SetInteger(IL::JPG_QUALITY, @options[:jpg_quality])
             IL.ClearColour(*@options[:clear_color])
         end
 
@@ -171,11 +172,13 @@ module Devil
                 :prepare_image_hook => nil,
                 :load_image_hook => nil,
                 :create_image_hook => nil,
+                :jpg_quality => 99
             }
             
             # configurable options
             ILU.ImageParameter(ILU::FILTER, @options[:scale_filter])
             ILU.ImageParameter(ILU::PLACEMENT, @options[:placement])
+            IL.SetInteger(IL::JPG_QUALITY, @options[:jpg_quality])
             IL.ClearColour(*@options[:clear_color])
 
             # fixed options
@@ -266,10 +269,16 @@ class Devil::Image
     alias_method :rows, :height
 
     # saves the image to +file+. If no +file+ is provided default to the opened file.
-    def save(file = @file)
+    def save(file = @file, options = {})
+        quality = options[:jpg_quality]
+        
         raise "This image does not have an associated file. Please provide an explicit file name when saving." if !file
         
-        action { IL.SaveImage(file) }
+        action do
+            IL.SetInteger(IL::JPG_QUALITY, quality) if quality
+            IL.SaveImage(file)
+            IL.SetInteger(IL::JPG_QUALITY, Devil.get_options[:jpg_quality]) if quality
+        end
         self
     end
     
