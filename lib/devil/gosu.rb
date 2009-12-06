@@ -37,19 +37,9 @@ class Gosu::Window
     def screenshot
         require 'opengl'
 
-        canvas_texture_id = glGenTextures(1).first
-        
         img = nil
         self.gl do
-            glEnable(GL_TEXTURE_2D)
-            glBindTexture(GL_TEXTURE_2D, canvas_texture_id)
-            
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, self.width, self.height, 0,
-                         GL_RGB, GL_UNSIGNED_BYTE, "\0" * self.width * self.height * 3)
-            
-            glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, self.width, self.height, 0)
-
-            data = glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE)
+            data = glReadPixels(0, 0, self.width, self.height, GL_RGBA, GL_UNSIGNED_BYTE)
             img = Devil.from_blob(data, self.width, self.height)
         end
         

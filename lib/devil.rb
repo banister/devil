@@ -4,6 +4,7 @@ require 'rbconfig'
 
 direc = File.dirname(__FILE__)
 dlext = Config::CONFIG['DLEXT']
+
 begin
     if RUBY_VERSION && RUBY_VERSION =~ /1.9/
         require "#{direc}/1.9/devil.#{dlext}"
@@ -13,14 +14,13 @@ begin
 rescue LoadError => e
     require "#{direc}/devil.#{dlext}"
 end
+require "#{direc}/devil/version"
 
 # Provides a high level wrapper for the low-level DevIL Ruby bindings
 module Devil
     include IL
     include ILU
 
-    VERSION = '0.1.9.0'
-    
     class << self
 
         # loads +file+ and returns a new image
@@ -253,6 +253,12 @@ class Devil::Image
 
     alias_method :close, :free
     alias_method :delete, :free
+
+# For some reason code below throws an exception (it shouldn't!)
+#     # tests image equality (deep comparison of image data)
+#     def ==(other)
+#         action { ILU.CompareImage(other.name) }
+#     end
     
     # returns the width of the image.
     def width
@@ -270,7 +276,7 @@ class Devil::Image
 
     # saves the image to +file+. If no +file+ is provided default to the opened file.
     def save(file = @file, options = {})
-        quality = options[:jpg_quality]
+        quality = options[:quality]
         
         raise "This image does not have an associated file. Please provide an explicit file name when saving." if !file
         

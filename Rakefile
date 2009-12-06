@@ -8,8 +8,8 @@ require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-DEVIL_VERSION = "0.1.9.0"
-
+# get the devil version
+require 'lib/devil/version'
 dlext = Config::CONFIG['DLEXT']
 
 CLEAN.include("ext/**/*.#{dlext}", "ext/**/.log", "ext/**/.o", "ext/**/*~", "ext/**/*#*", "ext/**/.obj", "ext/**/.def", "ext/**/.pdb")
@@ -19,7 +19,7 @@ spec = Gem::Specification.new do |s|
     s.name = "devil"
     s.summary = "ruby bindings for devil cross platform image loading library"
     s.description = s.summary
-    s.version = DEVIL_VERSION
+    s.version = Devil::VERSION
     s.author = "Jaroslaw Tworek, John Mair (banisterfiend)"
     s.email = 'jrmair@gmail.com'
     s.date = Time.now.strftime '%Y-%m-%d'

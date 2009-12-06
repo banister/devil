@@ -1,3 +1,7 @@
+2009-6-12 John Mair (Banisterfiend)
+* made Gosu::Window#screenshot 1.9 compatible (now using glReadPixels)
+* using version.rb to help manage versions
+
 2009-14-11 John Mair (Banisterfiend)
 * added to ruby_il.c:
 * IL::SetInteger, IL::JPG_QUALITY
