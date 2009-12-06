@@ -39,7 +39,7 @@ spec = Gem::Specification.new do |s|
     s.has_rdoc = true
     s.extra_rdoc_files = ["README"]
     s.rdoc_options << '--main' << 'README'
-    s.files = ["Rakefile", "README", "CHANGELOG", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb"] +
+    s.files = ["Rakefile", "README", "CHANGELOG", "LICENSE", "lib/devil.rb", "lib/devil/gosu.rb", "lib/devil/version.rb"] +
         FileList["ext/**/extconf.rb", "ext/**/*.h", "ext/**/*.c", "test/test*.rb", "test/*.png", "test/*.jpg"].to_a
 
     if RUBY_PLATFORM =~ /win32/
@@ -71,6 +71,6 @@ end
 
 Rake::RDocTask.new do |rd|
   rd.main = "README"
-  rd.rdoc_files.include("README", "lib/devil.rb", "lib/devil/gosu.rb")
+  rd.rdoc_files.include("README", "lib/devil.rb", "lib/devil/gosu.rb", "lib/devil/version.rb")
 end
 
