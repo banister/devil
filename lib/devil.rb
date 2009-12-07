@@ -254,12 +254,6 @@ class Devil::Image
     alias_method :close, :free
     alias_method :delete, :free
 
-# For some reason code below throws an exception (it shouldn't!)
-#     # tests image equality (deep comparison of image data)
-#     def ==(other)
-#         action { ILU.CompareImage(other.name) }
-#     end
-    
     # returns the width of the image.
     def width
         action { IL.GetInteger(IL::IMAGE_WIDTH) }
@@ -275,6 +269,8 @@ class Devil::Image
     alias_method :rows, :height
 
     # saves the image to +file+. If no +file+ is provided default to the opened file.
+    # Optional :quality hash parameter (only applies to JPEG images).
+    # Valid values are in the 0-99 range, with 99 being the best quality.
     def save(file = @file, options = {})
         quality = options[:quality]
         

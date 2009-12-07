@@ -1,4 +1,6 @@
 2009-6-12 John Mair (Banisterfiend)
+* version 0.1.9.1
+* added thumbnail2 and resize2 for anti-aliased image scaling
 * made Gosu::Window#screenshot 1.9 compatible (now using glReadPixels)
 * using version.rb to help manage versions
 
