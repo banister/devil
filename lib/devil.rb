@@ -301,8 +301,8 @@ class Devil::Image
 
     # resize the image to +width+ and +height+. Aspect ratios of the image do not have to be the same.
     # Applies a gaussian filter before rescaling to reduce aliasing.
-    # Optional :filter hash parameter that maps to a valid scale filter
     # Optional :gauss parameter - number of times to apply gaussian filter before resizing (default is 2)
+    # Optional :filter hash parameter that maps to a valid scale filter
     # (see: Devil.set_options :scale_filter)
     def resize2(width, height, options = {})
         gauss = options[:gauss] ||= 2
@@ -314,7 +314,6 @@ class Devil::Image
     # Creates a proportional thumbnail of the image scaled so its longest
     # edge is resized to +size+.
     # Optional :filter hash parameter that maps to a valid scale filter
-    # Optional :gauss parameter - number of times to apply gaussian filter before resizing (default is 2)
     # (see: Devil.set_options :scale_filter)
     def thumbnail(size, options = {})
 
@@ -328,6 +327,7 @@ class Devil::Image
     # Creates a proportional thumbnail of the image scaled so its longest
     # edge is resized to +size+.
     # Applies a gaussian filter before rescaling to reduce aliasing.
+    # Optional :gauss parameter - number of times to apply gaussian filter before resizing (default is 2)
     # Optional :filter hash parameter that maps to a valid scale filter
     # (see: Devil.set_options :scale_filter)
     def thumbnail2(size, options = {})
