@@ -3,6 +3,8 @@
 Ruby Devil version 0.1.9.1
 ========================
 
+[Read The Documentation](http://rdoc.info/projects/banister/devil)
+
 * Original author: Jaroslaw Tworek <dev.jrx@gmail.com>
 * Current maintainer: John Mair (banisterfiend) [http://banisterfiend.wordpress.com](http://banisterfiend.wordpress.com)
 

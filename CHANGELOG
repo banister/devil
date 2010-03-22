@@ -1,3 +1,6 @@
+2010-22-03 John Mair (Banisterfiend)
+* automatically convert from array to packed string in Devil.from_blob
+
 2009-6-12 John Mair (Banisterfiend)
 * version 0.1.9.1
 * added thumbnail2 and resize2 for anti-aliased image scaling

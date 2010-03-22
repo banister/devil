@@ -101,6 +101,11 @@ module Devil
         # convert an image +blob+ with +width+ and +height+
         # to a bona fide image
         def from_blob(blob, width, height)
+          
+            # try to convert automatically from array to packed string
+            # if passed an array
+            blob = blob.pack("C*") if blob.instance_of?(Array)
+          
             Image.new(IL.FromBlob(blob, width, height), nil)
         end
 
