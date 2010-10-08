@@ -1,6 +1,6 @@
 ![Alt text](http://dl.getdropbox.com/u/239375/DevIL.png)
 
-Ruby Devil version 0.1.9.1
+Ruby Devil version 0.1.9.5
 ========================
 
 [Read The Documentation](http://rdoc.info/projects/banister/devil)

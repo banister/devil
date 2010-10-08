@@ -1,3 +1,7 @@
+2010-8-10 John Mair (Banisterfiend)
+* version 0.1.9.5
+* mingw32 gem
+
 2010-22-03 John Mair (Banisterfiend)
 * automatically convert from array to packed string in Devil.from_blob
 
