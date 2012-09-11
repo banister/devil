@@ -3,7 +3,11 @@
 require 'rbconfig'
 
 direc = File.dirname(__FILE__)
-dlext = Config::CONFIG['DLEXT']
+unless defined? ::RbConfig
+    dlext = Config::CONFIG['DLEXT']
+else
+    dlext = RbConfig::CONFIG['DLEXT']
+end
 
 begin
     if RUBY_VERSION && RUBY_VERSION =~ /1.9/
